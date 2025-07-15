@@ -31,7 +31,6 @@ import {
   AttachMoney,
   SquareFoot,
   CheckCircle,
-  FilterList,
 } from '@mui/icons-material';
 
 const OurProjects = () => {

@@ -43,7 +43,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   
   const [projects, setProjects] = useState([
