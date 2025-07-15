@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
@@ -45,6 +45,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/website_test" element={<Navigate to="/" replace />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/projects" element={<OurProjects />} />
             <Route path="/contact" element={<ContactUs />} />

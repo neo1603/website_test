@@ -45,7 +45,9 @@ const Header = () => {
     setMobileOpen(false);
   };
 
-  const currentTabIndex = navItems.findIndex(item => item.path === location.pathname);
+  const currentTabIndex = navItems.findIndex(item => item.path === location.pathname) >= 0 
+    ? navItems.findIndex(item => item.path === location.pathname) 
+    : 0;
 
   const drawer = (
     <Box onClick={handleMobileDrawerToggle} sx={{ textAlign: 'center' }}>
