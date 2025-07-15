@@ -50,7 +50,7 @@ const Header = () => {
   const drawer = (
     <Box onClick={handleMobileDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Land Company
+        Agrawal Builders
       </Typography>
       <List>
         {navItems.map((item) => (
@@ -82,7 +82,7 @@ const Header = () => {
             sx={{ flexGrow: 1, cursor: 'pointer' }}
             onClick={() => navigate('/')}
           >
-            Land Company
+            Agrawal Builders
           </Typography>
 
           {isMobile ? (

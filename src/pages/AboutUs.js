@@ -51,13 +51,13 @@ const AboutUs = () => {
     {
       name: 'Lalit Agrawal',
       position: 'CEO & Founder',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
       experience: '20+ years',
     },
     {
       name: 'Lovely Agrawal',
       position: 'Director of Operations',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
+      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
       experience: '15+ years',
     },
     {
@@ -117,7 +117,7 @@ const AboutUs = () => {
               Our Story
             </Typography>
             <Typography variant="body1" paragraph sx={{ fontSize: '1.1rem', lineHeight: 1.8 }}>
-              Founded in 2008, Land Company has been at the forefront of the real estate development 
+              Founded in 2008, Agrawal Builders has been at the forefront of the real estate development 
               industry in the National Capital Region. What started as a small family business has 
               grown into one of the most trusted names in land development and plot selling.
             </Typography>
