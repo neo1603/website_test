@@ -21,7 +21,6 @@ import {
   People,
   Star,
   ArrowForward,
-  CheckCircle,
   TrendingUp,
   Security,
 } from '@mui/icons-material';
