@@ -106,10 +106,17 @@ const Header = () => {
 
           {isMobile ? (
             <IconButton
-              color="inherit"
+              color="primary"
               aria-label="open drawer"
               edge="start"
               onClick={handleMobileDrawerToggle}
+              sx={{
+                color: 'primary.main',
+                '&:hover': {
+                  bgcolor: 'primary.light',
+                  color: 'white',
+                },
+              }}
             >
               <MenuIcon />
             </IconButton>
