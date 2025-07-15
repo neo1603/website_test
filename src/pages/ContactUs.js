@@ -66,12 +66,12 @@ const ContactUs = () => {
     {
       icon: <Email />,
       title: 'Email',
-      details: ['info@landcompany.com', 'sales@landcompany.com'],
+      details: ['info@agrawalbuilders.com', 'sales@agrawalbuilders.com'],
     },
     {
       icon: <LocationOn />,
       title: 'Head Office',
-      details: ['123, Business Park, Sector 18', 'Gurgaon, Haryana - 122001'],
+      details: ['1st Floor, Vrindavan, Mathura 201318'],
     },
     {
       icon: <Business />,
@@ -82,22 +82,28 @@ const ContactUs = () => {
 
   const officeLocations = [
     {
+      city: 'Mathura',
+      address: '1st Floor, Vrindavan, Mathura 201318',
+      phone: '+91 98765 43210',
+      email: 'mathura@agrawalbuilders.com',
+    },
+    {
       city: 'Gurgaon',
       address: '123, Business Park, Sector 18, Gurgaon, Haryana - 122001',
       phone: '+91 98765 43210',
-      email: 'gurgaon@landcompany.com',
+      email: 'gurgaon@agrawalbuilders.com',
     },
     {
       city: 'Noida',
       address: '456, Tech Hub, Sector 62, Noida, Uttar Pradesh - 201301',
       phone: '+91 98765 43211',
-      email: 'noida@landcompany.com',
+      email: 'noida@agrawalbuilders.com',
     },
     {
       city: 'Faridabad',
       address: '789, Industrial Area, Sector 7, Faridabad, Haryana - 121001',
       phone: '+91 98765 43212',
-      email: 'faridabad@landcompany.com',
+      email: 'faridabad@agrawalbuilders.com',
     },
   ];
 
