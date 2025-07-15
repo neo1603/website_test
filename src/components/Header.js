@@ -58,7 +58,7 @@ const Header = () => {
         // This will ensure the home content is displayed
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, navItems]);
 
   const drawer = (
     <Box onClick={handleMobileDrawerToggle} sx={{ textAlign: 'center' }}>
