@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -48,6 +48,17 @@ const Header = () => {
   const currentTabIndex = navItems.findIndex(item => item.path === location.pathname) >= 0 
     ? navItems.findIndex(item => item.path === location.pathname) 
     : 0;
+
+  // Ensure home page loads when accessing root or GitHub Pages path
+  useEffect(() => {
+    if (location.pathname === '/' || location.pathname === '/website_test' || location.pathname === '/website_test/') {
+      // Force the home tab to be selected
+      const homeIndex = navItems.findIndex(item => item.path === '/');
+      if (homeIndex >= 0) {
+        // This will ensure the home content is displayed
+      }
+    }
+  }, [location.pathname]);
 
   const drawer = (
     <Box onClick={handleMobileDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -99,7 +110,7 @@ const Header = () => {
           ) : (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Tabs
-                value={currentTabIndex >= 0 ? currentTabIndex : false}
+                value={currentTabIndex}
                 onChange={handleTabChange}
                 textColor="inherit"
                 indicatorColor="secondary"

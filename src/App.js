@@ -46,11 +46,13 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/website_test" element={<Navigate to="/" replace />} />
+            <Route path="/website_test/" element={<Navigate to="/" replace />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/projects" element={<OurProjects />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </Router>
