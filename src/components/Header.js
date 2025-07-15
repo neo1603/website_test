@@ -87,12 +87,18 @@ const Header = () => {
 
   return (
     <>
-      <AppBar position="sticky" elevation={2}>
+      <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(10px)', borderBottom: '1px solid', borderColor: 'grey.200' }}>
         <Toolbar>
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, cursor: 'pointer' }}
+            sx={{ 
+              flexGrow: 1, 
+              cursor: 'pointer', 
+              fontWeight: 800,
+              color: 'primary.main',
+              fontSize: '1.5rem',
+            }}
             onClick={() => navigate('/')}
           >
             Agrawal Builders
@@ -112,8 +118,8 @@ const Header = () => {
               <Tabs
                 value={currentTabIndex}
                 onChange={handleTabChange}
-                textColor="inherit"
-                indicatorColor="secondary"
+                textColor="primary"
+                indicatorColor="primary"
                 sx={{ mr: 2 }}
               >
                 {navItems.map((item) => (
@@ -122,8 +128,14 @@ const Header = () => {
               </Tabs>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 onClick={() => navigate('/login')}
+                sx={{
+                  fontWeight: 600,
+                  borderRadius: 2,
+                  px: 3,
+                  py: 1,
+                }}
               >
                 Admin Login
               </Button>

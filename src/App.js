@@ -13,27 +13,84 @@ import Dashboard from './pages/Dashboard';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#1e3a8a',
+      light: '#3b82f6',
+      dark: '#1e40af',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#dc2626',
+      light: '#ef4444',
+      dark: '#b91c1c',
     },
     background: {
-      default: '#f5f5f5',
+      default: '#f8fafc',
+      paper: '#ffffff',
+    },
+    text: {
+      primary: '#1e293b',
+      secondary: '#64748b',
     },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    fontFamily: '"Inter", "Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
-      fontWeight: 700,
+      fontWeight: 800,
+      fontSize: '3.5rem',
+      lineHeight: 1.2,
+      letterSpacing: '-0.02em',
     },
     h2: {
-      fontWeight: 600,
+      fontWeight: 700,
+      fontSize: '2.5rem',
+      lineHeight: 1.3,
+      letterSpacing: '-0.01em',
     },
     h3: {
       fontWeight: 600,
+      fontSize: '2rem',
+      lineHeight: 1.4,
+    },
+    h4: {
+      fontWeight: 600,
+      fontSize: '1.5rem',
+      lineHeight: 1.4,
+    },
+    h5: {
+      fontWeight: 500,
+      fontSize: '1.25rem',
+      lineHeight: 1.5,
+    },
+    h6: {
+      fontWeight: 500,
+      fontSize: '1.125rem',
+      lineHeight: 1.5,
+    },
+    body1: {
+      fontSize: '1rem',
+      lineHeight: 1.7,
+    },
+    body2: {
+      fontSize: '0.875rem',
+      lineHeight: 1.6,
+    },
+    button: {
+      fontWeight: 600,
+      textTransform: 'none',
+      fontSize: '1rem',
     },
   },
+  shape: {
+    borderRadius: 12,
+  },
+  shadows: [
+    'none',
+    '0px 2px 4px rgba(0, 0, 0, 0.05)',
+    '0px 4px 8px rgba(0, 0, 0, 0.1)',
+    '0px 8px 16px rgba(0, 0, 0, 0.1)',
+    '0px 16px 32px rgba(0, 0, 0, 0.1)',
+    '0px 32px 64px rgba(0, 0, 0, 0.1)',
+    ...Array(19).fill('none'),
+  ],
 });
 
 function App() {
