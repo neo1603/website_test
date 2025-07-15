@@ -51,13 +51,13 @@ const AboutUs = () => {
     {
       name: 'Lalit Agrawal',
       position: 'CEO & Founder',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
+      image: '/images/lalit-agrawal.jpg',
       experience: '20+ years',
     },
     {
       name: 'Lovely Agrawal',
       position: 'Director of Operations',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
+      image: '/images/lovely-agrawal.jpg',
       experience: '15+ years',
     },
     {
