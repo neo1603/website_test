@@ -55,7 +55,7 @@ const AboutUs = () => {
       experience: '20+ years',
     },
     {
-      name: 'Priya Sharma',
+      name: 'Lovely Agrawal',
       position: 'Director of Operations',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
       experience: '15+ years',
