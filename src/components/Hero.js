@@ -7,6 +7,8 @@ import {
   Grid,
   useTheme,
   useMediaQuery,
+  Card,
+  CardContent,
 } from '@mui/material';
 import {
   Phone,
@@ -29,7 +31,7 @@ const Hero = () => {
   return (
     <Box
       sx={{
-        background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #f59e0b 100%)',
+        background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 50%, ${theme.palette.secondary.main} 100%)`,
         color: 'white',
         position: 'relative',
         overflow: 'hidden',
@@ -52,7 +54,7 @@ const Hero = () => {
             <Typography
               variant="h1"
               sx={{
-                fontWeight: 800,
+                fontWeight: 300,
                 fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4rem' },
                 mb: 3,
                 lineHeight: 1.2,
@@ -60,7 +62,7 @@ const Hero = () => {
               }}
             >
               Find Your Dream
-              <Box component="span" sx={{ color: 'secondary.main', display: 'block' }}>
+              <Box component="span" sx={{ color: theme.palette.secondary.main, display: 'block', fontWeight: 400 }}>
                 Property Today
               </Box>
             </Typography>
@@ -86,15 +88,18 @@ const Hero = () => {
                 size="large"
                 onClick={() => scrollToSection('#projects')}
                 sx={{
-                  backgroundColor: 'secondary.main',
+                  backgroundColor: theme.palette.secondary.main,
                   color: 'white',
                   px: 4,
                   py: 1.5,
                   fontSize: '1.1rem',
-                  fontWeight: 600,
+                  fontWeight: 500,
+                  borderRadius: 2,
+                  boxShadow: theme.shadows[4],
                   '&:hover': {
-                    backgroundColor: 'secondary.dark',
+                    backgroundColor: theme.palette.secondary.dark,
                     transform: 'translateY(-2px)',
+                    boxShadow: theme.shadows[8],
                   },
                   transition: 'all 0.3s ease',
                 }}
@@ -113,12 +118,14 @@ const Hero = () => {
                   px: 4,
                   py: 1.5,
                   fontSize: '1.1rem',
-                  fontWeight: 600,
+                  fontWeight: 500,
+                  borderRadius: 2,
                   '&:hover': {
                     backgroundColor: 'white',
-                    color: 'primary.main',
+                    color: theme.palette.primary.main,
                     borderColor: 'white',
                     transform: 'translateY(-2px)',
+                    boxShadow: theme.shadows[4],
                   },
                   transition: 'all 0.3s ease',
                 }}
@@ -132,30 +139,30 @@ const Hero = () => {
             <Grid container spacing={3} sx={{ mb: 4 }}>
               <Grid item xs={4}>
                 <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'secondary.main' }}>
+                  <Typography variant="h4" sx={{ fontWeight: 300, color: theme.palette.secondary.main }}>
                     1000+
                   </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                  <Typography variant="body2" sx={{ opacity: 0.8, fontWeight: 400 }}>
                     Happy Families
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={4}>
                 <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'secondary.main' }}>
+                  <Typography variant="h4" sx={{ fontWeight: 300, color: theme.palette.secondary.main }}>
                     50+
                   </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                  <Typography variant="body2" sx={{ opacity: 0.8, fontWeight: 400 }}>
                     Projects
                   </Typography>
                 </Box>
               </Grid>
               <Grid item xs={4}>
                 <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'secondary.main' }}>
+                  <Typography variant="h4" sx={{ fontWeight: 300, color: theme.palette.secondary.main }}>
                     15+
                   </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                  <Typography variant="body2" sx={{ opacity: 0.8, fontWeight: 400 }}>
                     Years Experience
                   </Typography>
                 </Box>
@@ -170,7 +177,7 @@ const Hero = () => {
                 height: { xs: 300, md: 500 },
                 borderRadius: 3,
                 overflow: 'hidden',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+                boxShadow: theme.shadows[12],
                 '&::before': {
                   content: '""',
                   position: 'absolute',
@@ -178,7 +185,7 @@ const Hero = () => {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  background: 'linear-gradient(45deg, rgba(30,58,138,0.8), rgba(59,130,246,0.6))',
+                  background: `linear-gradient(45deg, rgba(${theme.palette.primary.main},0.8), rgba(${theme.palette.primary.light},0.6))`,
                   zIndex: 1,
                 },
               }}
@@ -193,12 +200,12 @@ const Hero = () => {
                 }}
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.parentElement.style.background = 'linear-gradient(45deg, #1e3a8a, #3b82f6)';
+                  e.target.parentElement.style.background = `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`;
                 }}
               />
               
               {/* Floating Contact Card */}
-              <Box
+              <Card
                 sx={{
                   position: 'absolute',
                   bottom: 20,
@@ -206,93 +213,100 @@ const Hero = () => {
                   right: 20,
                   backgroundColor: 'rgba(255,255,255,0.95)',
                   borderRadius: 2,
-                  p: 3,
-                  zIndex: 2,
                   backdropFilter: 'blur(10px)',
+                  zIndex: 2,
+                  boxShadow: theme.shadows[8],
                 }}
               >
-                <Typography variant="h6" sx={{ fontWeight: 600, color: 'primary.main', mb: 2 }}>
-                  Get Free Consultation
-                </Typography>
-                
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    href="tel:+919084203961"
-                    startIcon={<Phone />}
-                    sx={{
-                      backgroundColor: 'primary.main',
-                      '&:hover': {
-                        backgroundColor: 'primary.dark',
-                      },
-                    }}
-                  >
-                    Call Now
-                  </Button>
+                <CardContent sx={{ p: 3 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 500, color: theme.palette.primary.main, mb: 2 }}>
+                    Get Free Consultation
+                  </Typography>
                   
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    href="https://wa.me/919084203961"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    startIcon={<WhatsApp />}
-                    sx={{
-                      borderColor: 'primary.main',
-                      color: 'primary.main',
-                      '&:hover': {
-                        backgroundColor: 'primary.main',
-                        color: 'white',
-                      },
-                    }}
-                  >
-                    WhatsApp
-                  </Button>
-                </Box>
-              </Box>
+                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      href="tel:+919084203961"
+                      startIcon={<Phone />}
+                      sx={{
+                        backgroundColor: theme.palette.primary.main,
+                        borderRadius: 1,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary.dark,
+                        },
+                      }}
+                    >
+                      Call Now
+                    </Button>
+                    
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      href="https://wa.me/919084203961"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      startIcon={<WhatsApp />}
+                      sx={{
+                        borderColor: theme.palette.primary.main,
+                        color: theme.palette.primary.main,
+                        borderRadius: 1,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary.main,
+                          color: 'white',
+                        },
+                      }}
+                    >
+                      WhatsApp
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
             </Box>
           </Grid>
         </Grid>
 
         {/* Location Banner */}
-        <Box
+        <Card
           sx={{
             mt: 6,
-            p: 3,
             backgroundColor: 'rgba(255,255,255,0.1)',
             borderRadius: 2,
             backdropFilter: 'blur(10px)',
             border: '1px solid rgba(255,255,255,0.2)',
+            boxShadow: theme.shadows[4],
           }}
         >
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={12} md={8}>
-              <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                Premium Locations Across Uttar Pradesh
-              </Typography>
-              <Typography variant="body1" sx={{ opacity: 0.9 }}>
-                Vrindavan • Mathura • Agra • Greater Noida • Mathura Vrindavan Region
-              </Typography>
+          <CardContent sx={{ p: 3 }}>
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={12} md={8}>
+                <Typography variant="h6" sx={{ fontWeight: 500, mb: 1 }}>
+                  Premium Locations Across Uttar Pradesh
+                </Typography>
+                <Typography variant="body1" sx={{ opacity: 0.9, fontWeight: 400 }}>
+                  Vrindavan • Mathura • Agra • Greater Noida • Mathura Vrindavan Region
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => scrollToSection('#projects')}
+                  startIcon={<LocationOn />}
+                  sx={{
+                    backgroundColor: theme.palette.secondary.main,
+                    borderRadius: 2,
+                    '&:hover': {
+                      backgroundColor: theme.palette.secondary.dark,
+                    },
+                  }}
+                >
+                  View All Locations
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Button
-                variant="contained"
-                fullWidth
-                onClick={() => scrollToSection('#projects')}
-                startIcon={<LocationOn />}
-                sx={{
-                  backgroundColor: 'secondary.main',
-                  '&:hover': {
-                    backgroundColor: 'secondary.dark',
-                  },
-                }}
-              >
-                View All Locations
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
+          </CardContent>
+        </Card>
       </Container>
     </Box>
   );
