@@ -7,6 +7,7 @@ import LandingPage from './pages/LandingPage';
 import AboutUs from './pages/AboutUs';
 import OurProjects from './pages/OurProjects';
 import ContactUs from './pages/ContactUs';
+import Feedback from './pages/Feedback';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
@@ -107,6 +108,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/projects" element={<OurProjects />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/feedback" element={<Feedback />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<Navigate to="/" replace />} />

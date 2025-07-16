@@ -1,7 +1,7 @@
 {
   "name": "agrawal-builders-website",
   "version": "1.0.0",
-  "homepage": "https://neo1603.github.io/website_test",
+  "homepage": "https://dreamsbhoomi.com",
   "description": "A modern, responsive website for a land/plot selling company",
   "private": true,
   "dependencies": {
@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "firebase": "^11.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",

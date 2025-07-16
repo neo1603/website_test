@@ -14,6 +14,8 @@ import {
   AccordionDetails,
   useTheme,
   useMediaQuery,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import {
   Phone,
@@ -23,6 +25,8 @@ import {
   ExpandMore,
   Send,
 } from '@mui/icons-material';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const ContactUs = () => {
   const theme = useTheme();
@@ -34,6 +38,12 @@ const ContactUs = () => {
     subject: '',
     message: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,18 +53,44 @@ const ContactUs = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-    });
+    setLoading(true);
+
+    try {
+      // Add contact form data to Firestore
+      await addDoc(collection(db, 'contact_submissions'), {
+        ...formData,
+        timestamp: serverTimestamp(),
+        userAgent: navigator.userAgent,
+        pageUrl: window.location.href,
+        type: 'contact_form'
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      });
+
+      setSnackbar({
+        open: true,
+        message: 'Thank you for your message! We will get back to you soon.',
+        severity: 'success'
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSnackbar({
+        open: true,
+        message: 'Error submitting form. Please try again.',
+        severity: 'error'
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -267,8 +303,9 @@ const ContactUs = () => {
                         fullWidth
                         endIcon={<Send />}
                         sx={{ py: 1.5 }}
+                        disabled={loading}
                       >
-                        Send Message
+                        {loading ? 'Sending...' : 'Send Message'}
                       </Button>
                     </Grid>
                   </Grid>
@@ -367,6 +404,20 @@ const ContactUs = () => {
           </Box>
         </Container>
       </Box>
+
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      >
+        <Alert 
+          onClose={() => setSnackbar({ ...snackbar, open: false })} 
+          severity={snackbar.severity}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

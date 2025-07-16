@@ -32,12 +32,14 @@ import {
   Delete,
   Business,
   TrendingUp,
-  People,
-  AttachMoney,
   Logout,
   Dashboard as DashboardIcon,
+  Feedback as FeedbackIcon,
+  Email,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -82,13 +84,46 @@ const Dashboard = () => {
     plots: '',
     sold: '0',
   });
+  const [feedback, setFeedback] = useState([]);
+  const [contactSubmissions, setContactSubmissions] = useState([]);
+  const [loading] = useState(true);
 
   useEffect(() => {
     // Check if user is authenticated
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     if (!isAuthenticated) {
       navigate('/login');
+      return;
     }
+
+    // Fetch feedback data
+    const feedbackQuery = query(collection(db, 'feedback'), orderBy('timestamp', 'desc'));
+    const contactQuery = query(collection(db, 'contact_submissions'), orderBy('timestamp', 'desc'));
+
+    const unsubscribeFeedback = onSnapshot(feedbackQuery, (snapshot) => {
+      const feedbackData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        timestamp: doc.data().timestamp?.toDate?.() || new Date()
+      }));
+      setFeedback(feedbackData);
+    });
+
+    const unsubscribeContact = onSnapshot(contactQuery, (snapshot) => {
+      const contactData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        timestamp: doc.data().timestamp?.toDate?.() || new Date()
+      }));
+      setContactSubmissions(contactData);
+    });
+
+    // Loading state handled by useEffect
+
+    return () => {
+      unsubscribeFeedback();
+      unsubscribeContact();
+    };
   }, [navigate]);
 
   const handleLogout = () => {
@@ -188,15 +223,15 @@ const Dashboard = () => {
       color: 'success.main',
     },
     {
-      title: 'Plots Sold',
-      value: projects.reduce((sum, p) => sum + p.sold, 0),
-      icon: <People />,
+      title: 'Feedback Received',
+      value: feedback.length,
+      icon: <FeedbackIcon />,
       color: 'info.main',
     },
     {
-      title: 'Revenue (Est.)',
-      value: `₹${(projects.reduce((sum, p) => sum + p.sold, 0) * 25000).toLocaleString()}`,
-      icon: <AttachMoney />,
+      title: 'Contact Submissions',
+      value: contactSubmissions.length,
+      icon: <Email />,
       color: 'warning.main',
     },
   ];
@@ -317,6 +352,126 @@ const Dashboard = () => {
               </TableBody>
             </Table>
           </TableContainer>
+        </Paper>
+
+        {/* Feedback Management */}
+        <Paper elevation={2} sx={{ p: 3, mt: 4 }}>
+          <Typography variant="h5" component="h2" sx={{ mb: 3 }}>
+            Recent Feedback
+          </Typography>
+          
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Rating</TableCell>
+                  <TableCell>Category</TableCell>
+                  <TableCell>Message</TableCell>
+                  <TableCell>Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {feedback.slice(0, 10).map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      <Typography variant="subtitle1" fontWeight={600}>
+                        {item.name}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>{item.email}</TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {item.rating}/5
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={item.category}
+                        color="primary"
+                        size="small"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ maxWidth: 200 }}>
+                        {item.message.length > 100 
+                          ? `${item.message.substring(0, 100)}...` 
+                          : item.message
+                        }
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      {item.timestamp?.toLocaleDateString() || 'N/A'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          
+          {feedback.length === 0 && (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="body1" color="text.secondary">
+                No feedback received yet.
+              </Typography>
+            </Box>
+          )}
+        </Paper>
+
+        {/* Contact Submissions */}
+        <Paper elevation={2} sx={{ p: 3, mt: 4 }}>
+          <Typography variant="h5" component="h2" sx={{ mb: 3 }}>
+            Contact Form Submissions
+          </Typography>
+          
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Phone</TableCell>
+                  <TableCell>Subject</TableCell>
+                  <TableCell>Message</TableCell>
+                  <TableCell>Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {contactSubmissions.slice(0, 10).map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      <Typography variant="subtitle1" fontWeight={600}>
+                        {item.name}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>{item.email}</TableCell>
+                    <TableCell>{item.phone}</TableCell>
+                    <TableCell>{item.subject}</TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ maxWidth: 200 }}>
+                        {item.message.length > 100 
+                          ? `${item.message.substring(0, 100)}...` 
+                          : item.message
+                        }
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      {item.timestamp?.toLocaleDateString() || 'N/A'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          
+          {contactSubmissions.length === 0 && (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="body1" color="text.secondary">
+                No contact submissions yet.
+              </Typography>
+            </Box>
+          )}
         </Paper>
       </Container>
 

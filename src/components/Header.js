@@ -30,6 +30,7 @@ const Header = () => {
     { label: 'About Us', path: '/about' },
     { label: 'Our Projects', path: '/projects' },
     { label: 'Contact Us', path: '/contact' },
+    { label: 'Feedback', path: '/feedback' },
   ];
 
   const handleTabChange = (event, newValue) => {
