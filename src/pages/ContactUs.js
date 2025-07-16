@@ -25,8 +25,8 @@ import {
   ExpandMore,
   Send,
 } from '@mui/icons-material';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
+// import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+// import { db } from '../firebase';
 
 const ContactUs = () => {
   const theme = useTheme();
@@ -58,15 +58,9 @@ const ContactUs = () => {
     setLoading(true);
 
     try {
-      // Add contact form data to Firestore
-      await addDoc(collection(db, 'contact_submissions'), {
-        ...formData,
-        timestamp: serverTimestamp(),
-        userAgent: navigator.userAgent,
-        pageUrl: window.location.href,
-        type: 'contact_form'
-      });
-
+      // Temporarily disabled Firebase
+      console.log('Form submitted:', formData);
+      
       // Reset form
       setFormData({
         name: '',

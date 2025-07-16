@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
+// import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+// import { db } from '../firebase';
 import { 
   Box, 
   TextField, 
@@ -36,13 +36,8 @@ const FeedbackForm = () => {
     setLoading(true);
 
     try {
-      // Add feedback to Firestore
-      await addDoc(collection(db, 'feedback'), {
-        ...feedback,
-        timestamp: serverTimestamp(),
-        userAgent: navigator.userAgent,
-        pageUrl: window.location.href
-      });
+      // Temporarily disabled Firebase
+      console.log('Feedback submitted:', feedback);
 
       // Reset form
       setFeedback({

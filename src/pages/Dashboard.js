@@ -38,8 +38,8 @@ import {
   Email,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+// import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+// import { db } from '../firebase';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -96,34 +96,8 @@ const Dashboard = () => {
       return;
     }
 
-    // Fetch feedback data
-    const feedbackQuery = query(collection(db, 'feedback'), orderBy('timestamp', 'desc'));
-    const contactQuery = query(collection(db, 'contact_submissions'), orderBy('timestamp', 'desc'));
-
-    const unsubscribeFeedback = onSnapshot(feedbackQuery, (snapshot) => {
-      const feedbackData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        timestamp: doc.data().timestamp?.toDate?.() || new Date()
-      }));
-      setFeedback(feedbackData);
-    });
-
-    const unsubscribeContact = onSnapshot(contactQuery, (snapshot) => {
-      const contactData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        timestamp: doc.data().timestamp?.toDate?.() || new Date()
-      }));
-      setContactSubmissions(contactData);
-    });
-
+    // Temporarily disabled Firebase
     // Loading state handled by useEffect
-
-    return () => {
-      unsubscribeFeedback();
-      unsubscribeContact();
-    };
   }, [navigate]);
 
   const handleLogout = () => {
