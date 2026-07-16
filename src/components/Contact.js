@@ -46,10 +46,11 @@ const Contact = () => {
       title: 'Call Us',
       details: [
         '+91 90842 03961',
-        '+91 98765 43211',
-        '+91 98765 43212',
+        '+91 80025 23318',
+        '+91 84451 50180',
+        '+91 98976 46552',
       ],
-      action: 'tel:+919876543210',
+      action: 'tel:+919084203961',
       description: 'Available 24/7 for your queries',
     },
     {
@@ -80,7 +81,7 @@ const Contact = () => {
         'Chhatikara, Vrindavan,',
         'Uttar Pradesh, India',
       ],
-      action: 'https://maps.google.com/?q=Chhatikara+Vrindavan+Uttar+Pradesh',
+      action: 'https://maps.google.com/?q=NH-2,+Front+of+Flyover,+Chhatikara,+Vrindavan,+Uttar+Pradesh,+India',
       description: 'Schedule a site visit',
     },
   ];
@@ -328,7 +329,7 @@ const Contact = () => {
             }}
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.9024424301687!2d77.3673!3d28.6139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5a43173357b%3A0x37ffce30c87cc03f!2sNoida%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1234567890"
+              src="https://www.google.com/maps?q=NH-2,+Front+of+Flyover,+Chhatikara,+Vrindavan,+Uttar+Pradesh,+India&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

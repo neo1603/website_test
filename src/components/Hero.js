@@ -4,22 +4,16 @@ import {
   Typography,
   Button,
   Box,
-  Grid,
   useTheme,
-  useMediaQuery,
-  Card,
-  CardContent,
 } from '@mui/material';
 import {
   Phone,
   WhatsApp,
-  LocationOn,
   ArrowForward,
 } from '@mui/icons-material';
 
 const Hero = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
@@ -29,287 +23,178 @@ const Hero = () => {
   };
 
   return (
-    <Box
-      sx={{
-        background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 50%, ${theme.palette.secondary.main} 100%)`,
-        color: 'white',
-        position: 'relative',
-        overflow: 'hidden',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'url(https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=800&fit=crop) center/cover',
-          opacity: 0.1,
-          zIndex: 1,
-        },
-      }}
-    >
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, py: { xs: 8, md: 12 } }}>
-        <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={6}>
+    <Box>
+      {/* Full-width photo hero */}
+      <Box
+        sx={{
+          position: 'relative',
+          overflow: 'hidden',
+          minHeight: { xs: 'auto', md: 640 },
+        }}
+      >
+        <Box
+          component="img"
+          src="/images/kvaan-tower.jpg"
+          alt="Kvaan Tower, Krishna Nagar, Mathura"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            background: `linear-gradient(100deg, rgba(13,13,13,0.94) 0%, rgba(13,13,13,0.82) 40%, rgba(13,13,13,0.45) 65%, rgba(255,177,0,0.35) 100%)`,
+            zIndex: 1,
+          }}
+        />
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, pt: { xs: '96px', md: '130px' }, pb: { xs: 6, md: 10 } }}>
+          <Box sx={{ maxWidth: 640 }}>
+            <Typography
+              variant="overline"
+              sx={{
+                color: theme.palette.secondary.main,
+                fontWeight: 700,
+                letterSpacing: '0.2em',
+                mb: 2,
+                display: 'block',
+              }}
+            >
+              Mathura–Vrindavan · since 2008
+            </Typography>
+
             <Typography
               variant="h1"
               sx={{
-                fontWeight: 300,
-                fontSize: { xs: '2.5rem', md: '3.5rem', lg: '4rem' },
+                color: 'white',
+                fontWeight: 700,
+                fontSize: { xs: '2.5rem', md: '3.2rem', lg: '3.6rem' },
                 mb: 3,
-                lineHeight: 1.2,
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                lineHeight: 1.08,
+                letterSpacing: '-0.01em',
+                textShadow: '0 2px 12px rgba(0,0,0,0.4)',
               }}
             >
               Find Your Dream
-              <Box component="span" sx={{ color: theme.palette.secondary.main, display: 'block', fontWeight: 400 }}>
+              <Box component="span" sx={{ color: theme.palette.secondary.main, display: 'block' }}>
                 Property Today
               </Box>
             </Typography>
-            
+
             <Typography
-              variant="h5"
+              variant="body1"
               sx={{
+                color: 'white',
                 mb: 4,
                 fontWeight: 400,
-                lineHeight: 1.6,
-                opacity: 0.9,
-                textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                lineHeight: 1.7,
+                opacity: 0.85,
               }}
             >
-              Premium residential plots, luxury villas, and commercial properties 
-              across Mathura Vrindavan region. Established in 2008, we've delivered 1000+ happy families 
+              Premium residential plots, luxury villas, and commercial properties
+              across Mathura Vrindavan region. Established in 2008, we've delivered 1000+ happy families
               with transparent dealings and quality construction.
             </Typography>
 
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 4 }}>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 5 }}>
               <Button
                 variant="contained"
                 size="large"
                 onClick={() => scrollToSection('#projects')}
                 sx={{
                   backgroundColor: theme.palette.secondary.main,
-                  color: 'white',
+                  color: '#1A1200',
                   px: 4,
                   py: 1.5,
-                  fontSize: '1.1rem',
-                  fontWeight: 500,
-                  borderRadius: 2,
-                  boxShadow: theme.shadows[4],
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  borderRadius: 1,
+                  boxShadow: 'none',
                   '&:hover': {
                     backgroundColor: theme.palette.secondary.dark,
-                    transform: 'translateY(-2px)',
-                    boxShadow: theme.shadows[8],
+                    boxShadow: 'none',
                   },
-                  transition: 'all 0.3s ease',
                 }}
               >
                 View Projects
                 <ArrowForward sx={{ ml: 1 }} />
               </Button>
-              
+
               <Button
                 variant="outlined"
                 size="large"
                 href="tel:+919084203961"
                 sx={{
-                  borderColor: 'white',
+                  borderColor: 'rgba(255,255,255,0.5)',
                   color: 'white',
                   px: 4,
                   py: 1.5,
-                  fontSize: '1.1rem',
-                  fontWeight: 500,
-                  borderRadius: 2,
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  borderRadius: 1,
                   '&:hover': {
-                    backgroundColor: 'white',
-                    color: theme.palette.primary.main,
                     borderColor: 'white',
-                    transform: 'translateY(-2px)',
-                    boxShadow: theme.shadows[4],
+                    backgroundColor: 'rgba(255,255,255,0.08)',
                   },
-                  transition: 'all 0.3s ease',
                 }}
               >
                 <Phone sx={{ mr: 1 }} />
                 Call Now
               </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                href="https://wa.me/919084203961"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  borderColor: 'rgba(255,255,255,0.5)',
+                  color: 'white',
+                  px: 4,
+                  py: 1.5,
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  borderRadius: 1,
+                  '&:hover': {
+                    borderColor: 'white',
+                    backgroundColor: 'rgba(255,255,255,0.08)',
+                  },
+                }}
+              >
+                <WhatsApp sx={{ mr: 1 }} />
+                WhatsApp
+              </Button>
             </Box>
 
             {/* Quick Stats */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-              <Grid item xs={4}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h4" sx={{ fontWeight: 300, color: theme.palette.secondary.main }}>
-                    1000+
+            <Box sx={{ display: 'flex', gap: { xs: 3, md: 5 } }}>
+              {[
+                { value: '1,000+', label: 'Happy Families' },
+                { value: '50+', label: 'Projects' },
+                { value: '15+', label: 'Years Experience' },
+              ].map((stat) => (
+                <Box key={stat.label}>
+                  <Typography variant="h5" sx={{ fontWeight: 700, color: theme.palette.secondary.main }}>
+                    {stat.value}
                   </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8, fontWeight: 400 }}>
-                    Happy Families
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h4" sx={{ fontWeight: 300, color: theme.palette.secondary.main }}>
-                    50+
-                  </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8, fontWeight: 400 }}>
-                    Projects
+                  <Typography variant="caption" sx={{ color: 'white', opacity: 0.7, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {stat.label}
                   </Typography>
                 </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="h4" sx={{ fontWeight: 300, color: theme.palette.secondary.main }}>
-                    15+
-                  </Typography>
-                  <Typography variant="body2" sx={{ opacity: 0.8, fontWeight: 400 }}>
-                    Years Experience
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Box
-              sx={{
-                position: 'relative',
-                height: { xs: 300, md: 500 },
-                borderRadius: 3,
-                overflow: 'hidden',
-                boxShadow: theme.shadows[12],
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: `linear-gradient(45deg, rgba(${theme.palette.primary.main},0.8), rgba(${theme.palette.primary.light},0.6))`,
-                  zIndex: 1,
-                },
-              }}
-            >
-              <img
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop"
-                alt="Dream Property"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                }}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.parentElement.style.background = `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`;
-                }}
-              />
-              
-              {/* Floating Contact Card */}
-              <Card
-                sx={{
-                  position: 'absolute',
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  backgroundColor: 'rgba(255,255,255,0.95)',
-                  borderRadius: 2,
-                  backdropFilter: 'blur(10px)',
-                  zIndex: 2,
-                  boxShadow: theme.shadows[8],
-                }}
-              >
-                <CardContent sx={{ p: 3 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 500, color: theme.palette.primary.main, mb: 2 }}>
-                    Get Free Consultation
-                  </Typography>
-                  
-                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      href="tel:+919084203961"
-                      startIcon={<Phone />}
-                      sx={{
-                        backgroundColor: theme.palette.primary.main,
-                        borderRadius: 1,
-                        '&:hover': {
-                          backgroundColor: theme.palette.primary.dark,
-                        },
-                      }}
-                    >
-                      Call Now
-                    </Button>
-                    
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      href="https://wa.me/919084203961"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      startIcon={<WhatsApp />}
-                      sx={{
-                        borderColor: theme.palette.primary.main,
-                        color: theme.palette.primary.main,
-                        borderRadius: 1,
-                        '&:hover': {
-                          backgroundColor: theme.palette.primary.main,
-                          color: 'white',
-                        },
-                      }}
-                    >
-                      WhatsApp
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
+              ))}
             </Box>
-          </Grid>
-        </Grid>
-
-        {/* Location Banner */}
-        <Card
-          sx={{
-            mt: 6,
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            borderRadius: 2,
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            boxShadow: theme.shadows[4],
-          }}
-        >
-          <CardContent sx={{ p: 3 }}>
-            <Grid container spacing={3} alignItems="center">
-              <Grid item xs={12} md={8}>
-                <Typography variant="h6" sx={{ fontWeight: 500, mb: 1 }}>
-                  Premium Locations Across Uttar Pradesh
-                </Typography>
-                <Typography variant="body1" sx={{ opacity: 0.9, fontWeight: 400 }}>
-                  Vrindavan • Mathura • Agra • Greater Noida • Mathura Vrindavan Region
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={() => scrollToSection('#projects')}
-                  startIcon={<LocationOn />}
-                  sx={{
-                    backgroundColor: theme.palette.secondary.main,
-                    borderRadius: 2,
-                    '&:hover': {
-                      backgroundColor: theme.palette.secondary.dark,
-                    },
-                  }}
-                >
-                  View All Locations
-                </Button>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Container>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 };
 
-export default Hero; 
+export default Hero;

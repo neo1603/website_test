@@ -22,10 +22,9 @@ const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const menuItems = [
+    { text: 'Portfolio', href: '#projects' },
+    { text: 'Events', href: '#events' },
     { text: 'About', href: '#about' },
-    { text: 'Services', href: '#services' },
-    { text: 'Projects', href: '#projects' },
-    { text: 'Insights', href: '#insights' },
     { text: 'Contact', href: '#contact' },
   ];
 
@@ -67,12 +66,12 @@ const Header = () => {
   );
 
   return (
-    <AppBar 
-      position="fixed" 
-      sx={{ 
-        backgroundColor: 'white', 
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: theme.palette.primary.main,
         boxShadow: theme.shadows[4],
-        borderBottom: `1px solid ${theme.palette.grey[200]}`,
+        borderBottom: `1px solid rgba(255,255,255,0.1)`,
       }}
       elevation={0}
     >
@@ -90,7 +89,7 @@ const Header = () => {
                 variant="h5"
                 component="div"
                 sx={{
-                  color: theme.palette.primary.main,
+                  color: '#F5F4F0',
                   fontWeight: 700,
                   fontSize: '1.8rem',
                   cursor: 'pointer',
@@ -117,7 +116,7 @@ const Header = () => {
                 variant="h5"
                 component="div"
                 sx={{
-                  color: theme.palette.primary.main,
+                  color: '#F5F4F0',
                   fontWeight: 700,
                   fontSize: '1.8rem',
                   cursor: 'pointer',
@@ -141,12 +140,11 @@ const Header = () => {
 
           {isMobile ? (
             <IconButton
-              color="primary"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
               sx={{
-                color: theme.palette.primary.main,
+                color: '#F5F4F0',
               }}
             >
               <MenuIcon />
@@ -156,17 +154,17 @@ const Header = () => {
               {menuItems.map((item) => (
                 <Button
                   key={item.text}
-                  color="primary"
                   onClick={() => scrollToSection(item.href)}
                   sx={{
+                    color: '#F5F4F0',
                     fontWeight: 600,
                     textTransform: 'none',
                     fontSize: '1rem',
                     borderRadius: 2,
                     px: 2,
                     '&:hover': {
-                      backgroundColor: theme.palette.primary.main,
-                      color: 'white',
+                      backgroundColor: theme.palette.secondary.main,
+                      color: '#1A1200',
                       transform: 'translateY(-1px)',
                       boxShadow: theme.shadows[4],
                     },

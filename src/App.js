@@ -1,30 +1,32 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Services from './components/Services';
 import Projects from './components/Projects';
-import Insights from './components/Insights';
+import Events from './components/Events';
+import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ProjectDetail from './pages/ProjectDetail';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2', // Material Blue
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#0D0D0D', // Split Frame — ink black
+      light: '#3D3D3D',
+      dark: '#000000',
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#ff9800', // Material Orange
-      light: '#ffb74d',
-      dark: '#f57c00',
-      contrastText: '#ffffff',
+      main: '#FFB100', // Split Frame — amber
+      light: '#FFCF6B',
+      dark: '#A86D00',
+      contrastText: '#1A1200',
     },
     background: {
-      default: '#fafafa',
+      default: '#ffffff',
       paper: '#ffffff',
     },
     text: {
@@ -173,15 +175,27 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
-        <Header />
-        <Hero />
-        <Services />
-        <Projects />
-        <Insights />
-        <Contact />
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Hero />
+                  <Projects />
+                  <Events />
+                  <AboutUs />
+                  <Contact />
+                </>
+              }
+            />
+            <Route path="/project/:id" element={<ProjectDetail />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

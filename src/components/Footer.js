@@ -43,10 +43,9 @@ const Footer = () => {
   ];
 
   const quickLinks = [
+    { name: 'Our Portfolio', href: '#projects' },
+    { name: 'Events & Celebrations', href: '#events' },
     { name: 'About Us', href: '#about' },
-    { name: 'Our Projects', href: '#projects' },
-    { name: 'Services', href: '#services' },
-    { name: 'Insights', href: '#insights' },
     { name: 'Contact', href: '#contact' },
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
@@ -76,8 +75,9 @@ const Footer = () => {
       title: 'Call Us',
       details: [
         '+91 90842 03961',
-        '+91 98765 43211',
-        '+91 98765 43212',
+        '+91 80025 23318',
+        '+91 84451 50180',
+        '+91 98976 46552',
       ],
       action: 'tel:+919084203961',
     },
@@ -107,7 +107,7 @@ const Footer = () => {
         'Chhatikara, Vrindavan,',
         'Uttar Pradesh, India',
       ],
-      action: 'https://maps.google.com/?q=Chhatikara+Vrindavan+Uttar+Pradesh',
+      action: 'https://maps.google.com/?q=NH-2,+Front+of+Flyover,+Chhatikara,+Vrindavan,+Uttar+Pradesh,+India',
     },
   ];
 
@@ -162,17 +162,17 @@ const Footer = () => {
             </Box>
           </Grid>
 
-          {/* Services & Quick Links */}
+          {/* Property Types & Quick Links */}
           <Grid item xs={12} sm={6} md={2}>
             <Typography variant="h6" sx={{ fontWeight: 600, mb: 3, color: 'secondary.main' }}>
-              Our Services
+              Property Types
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {services.slice(0, 6).map((service) => (
                 <Link
                   key={service.name}
-                  href="#services"
-                  onClick={() => scrollToSection('#services')}
+                  href="#projects"
+                  onClick={() => scrollToSection('#projects')}
                   sx={{
                     color: 'rgba(255,255,255,0.8)',
                     textDecoration: 'none',
