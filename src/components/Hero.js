@@ -222,7 +222,6 @@ const Hero = () => {
             display: 'flex',
             gap: 2,
             flexWrap: 'wrap',
-            alignItems: 'center',
             position: 'relative',
             zIndex: 4,
             flexDirection: 'column',
