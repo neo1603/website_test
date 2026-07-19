@@ -5,7 +5,7 @@ import { Add, Apartment, Image as ImageIcon, Inbox } from '@mui/icons-material';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend,
+  PieChart, Pie, Cell,
 } from 'recharts';
 import { db } from '../../firebase';
 import { useCollection } from '../../hooks/useCollection';

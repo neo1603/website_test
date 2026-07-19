@@ -7,15 +7,10 @@ import {
   Link,
   IconButton,
   Divider,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import {
   Facebook,
-  Twitter,
   Instagram,
-  LinkedIn,
-  YouTube,
   Phone,
   Email,
   LocationOn,
@@ -41,8 +36,6 @@ const DEFAULT_SETTINGS = {
 };
 
 const Footer = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: settingsDoc } = useDocument('settings', 'general');
   const settings = { ...DEFAULT_SETTINGS, ...settingsDoc };
   const phoneList = settings.phones.split(',').map((p) => p.trim()).filter(Boolean);

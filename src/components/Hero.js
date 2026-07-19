@@ -35,14 +35,10 @@ const Hero = () => {
   const [type, setType] = useState('all');
 
   useEffect(() => {
-    if (slide >= SLIDES.length) setSlide(0);
+    setSlide((s) => (s >= SLIDES.length ? 0 : s));
     const timer = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), 6000);
     return () => clearInterval(timer);
   }, [SLIDES.length]);
-
-  const scrollToSection = (href) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const PROJECT_TYPES = ['Plot', 'Villa', 'Flat', 'Commercial'];
   const PROPERTY_TYPES = ['Independent House', 'Commercial Shop', 'Residential Plot', 'Luxury Apartment'];

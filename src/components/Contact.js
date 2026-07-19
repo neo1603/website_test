@@ -8,8 +8,6 @@ import {
   Box,
   Card,
   CardContent,
-  useTheme,
-  useMediaQuery,
   Snackbar,
   Alert,
 } from '@mui/material';
@@ -19,7 +17,6 @@ import {
   LocationOn,
   WhatsApp,
   Send,
-  Business,
   AccessTime,
 } from '@mui/icons-material';
 import { db, isConfigured, logEvent } from '../firebase';
@@ -48,8 +45,6 @@ const Contact = () => {
     severity: 'success',
   });
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { data: settingsDoc } = useDocument('settings', 'general');
   const settings = { ...DEFAULT_SETTINGS, ...settingsDoc };
   const phoneList = settings.phones.split(',').map((p) => p.trim()).filter(Boolean);
