@@ -15,6 +15,7 @@ import { useCollection } from '../hooks/useCollection';
 import { useLanguage } from '../context/LanguageContext';
 import VaastuCompass from '../components/VaastuCompass';
 import ProjectCard from '../components/ProjectCard';
+import LoanCalculator from '../components/LoanCalculator';
 
 const SpecItem = ({ icon, label, value }) => (
   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 2, py: 1.5, backgroundColor: '#FAF7F0', borderRadius: 2, border: '1px solid #E5E7EB', flex: '1 1 140px' }}>
@@ -218,6 +219,8 @@ const ProjectDetail = () => {
           </Box>
         )}
       </Container>
+
+      <LoanCalculator />
     </Box>
   );
 };

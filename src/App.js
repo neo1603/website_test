@@ -5,20 +5,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import TrustBadges from './components/TrustBadges';
 import Projects from './components/Projects';
 import FeaturedProperties from './components/FeaturedProperties';
-import WhyChooseUs from './components/WhyChooseUs';
-import LoanCalculator from './components/LoanCalculator';
-import Testimonials from './components/Testimonials';
-import Events from './components/Events';
-import AboutUs from './components/AboutUs';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MobileActionBar from './components/MobileActionBar';
 import ProjectDetail from './pages/ProjectDetail';
 import ProjectsListPage from './pages/ProjectsListPage';
 import PropertiesListPage from './pages/PropertiesListPage';
+import AboutPage from './pages/AboutPage';
 import FloatingContactButtons from './components/FloatingContactButtons';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLogin from './pages/admin/AdminLogin';
@@ -51,10 +45,22 @@ const ScrollToHash = () => {
   useEffect(() => {
     if (!location.hash) return;
     const id = location.hash.slice(1);
-    const timeout = setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-    return () => clearTimeout(timeout);
+    let attempts = 0;
+    let cancelled = false;
+
+    const tryScroll = () => {
+      if (cancelled) return;
+      const el = document.getElementById(id);
+      attempts += 1;
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      } else if (attempts < 20) {
+        setTimeout(tryScroll, 100);
+      }
+    };
+    const initial = setTimeout(tryScroll, 50);
+
+    return () => { cancelled = true; clearTimeout(initial); };
   }, [location.pathname, location.hash]);
   return null;
 };
@@ -250,15 +256,8 @@ function App() {
                     element={
                       <>
                         <Hero />
-                        <TrustBadges />
                         <Projects />
                         <FeaturedProperties />
-                        <WhyChooseUs />
-                        <LoanCalculator />
-                        <Testimonials />
-                        <Events />
-                        <AboutUs />
-                        <Contact />
                       </>
                     }
                   />
@@ -266,6 +265,7 @@ function App() {
                   <Route path="/properties" element={<PropertiesListPage />} />
                   <Route path="/project/:id" element={<ProjectDetail />} />
                   <Route path="/property/:id" element={<ProjectDetail />} />
+                  <Route path="/about" element={<AboutPage />} />
                 </Route>
 
                 <Route path="/admin/login" element={<AdminLogin />} />

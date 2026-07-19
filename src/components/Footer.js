@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -52,10 +53,11 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: 'Our Portfolio', href: '#projects' },
-    { name: 'Events & Celebrations', href: '#events' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Our Projects', to: '/projects' },
+    { name: 'Our Properties', to: '/properties' },
+    { name: 'Events & Celebrations', to: '/about', hash: '#events' },
+    { name: 'About Us', to: '/about' },
+    { name: 'Contact', to: '/about', hash: '#contact' },
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
     { name: 'Careers', href: '/careers' },
@@ -101,13 +103,6 @@ const Footer = () => {
       action: `https://maps.google.com/?q=${encodeURIComponent(settings.address)}`,
     },
   ];
-
-  const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <Box sx={{ backgroundColor: 'primary.dark', color: 'white', pb: { xs: '64px', md: 0 } }}>
@@ -162,8 +157,8 @@ const Footer = () => {
               {services.slice(0, 6).map((service) => (
                 <Link
                   key={service.name}
-                  href="#projects"
-                  onClick={() => scrollToSection('#projects')}
+                  component={RouterLink}
+                  to="/projects"
                   sx={{
                     color: 'rgba(255,255,255,0.8)',
                     textDecoration: 'none',
@@ -192,8 +187,9 @@ const Footer = () => {
               {quickLinks.map((link) => (
                 <Link
                   key={link.name}
-                  href={link.href}
-                  onClick={link.href.startsWith('#') ? () => scrollToSection(link.href) : undefined}
+                  {...(link.to
+                    ? { component: RouterLink, to: link.hash ? `${link.to}${link.hash}` : link.to }
+                    : { href: link.href })}
                   sx={{
                     color: 'rgba(255,255,255,0.8)',
                     textDecoration: 'none',

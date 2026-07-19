@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { Phone, WhatsApp, Search } from '@mui/icons-material';
 import { useLanguage } from '../context/LanguageContext';
@@ -6,19 +7,13 @@ import { logEvent } from '../firebase';
 
 const MobileActionBar = () => {
   const { t } = useLanguage();
-
-  const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const navigate = useNavigate();
 
   const actions = [
     {
       icon: <Search />,
       label: t('nav_portfolio'),
-      onClick: () => { logEvent('select_content', { item: 'mobile_bar_portfolio' }); scrollToSection('#projects'); },
+      onClick: () => { logEvent('select_content', { item: 'mobile_bar_portfolio' }); navigate('/projects'); },
     },
     {
       icon: <Phone />,

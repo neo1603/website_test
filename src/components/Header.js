@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -25,27 +25,20 @@ const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { lang, setLang, t } = useLanguage();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const navItems = [
     { text: t('nav_home'), to: '/' },
     { text: t('nav_projects'), to: '/projects' },
     { text: t('nav_properties'), to: '/properties' },
-    { text: t('nav_calculator'), hash: '#loan-calculator' },
-    { text: t('nav_events'), hash: '#events' },
-    { text: t('nav_about'), hash: '#about' },
-    { text: t('nav_contact'), hash: '#contact' },
+    { text: t('nav_about'), to: '/about' },
+    { text: t('nav_contact'), to: '/about', hash: '#contact' },
   ];
 
   const goTo = (item) => {
     if (item.to) {
-      navigate(item.to);
+      navigate(item.hash ? `${item.to}${item.hash}` : item.to);
     } else if (item.hash) {
-      if (location.pathname === '/') {
-        document.getElementById(item.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        navigate(`/${item.hash}`);
-      }
+      document.getElementById(item.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' });
     }
     setMobileOpen(false);
   };
@@ -54,7 +47,7 @@ const Header = () => {
 
   const handleEnquireNow = () => {
     logEvent('select_content', { item: 'header_enquire_now' });
-    goTo({ hash: '#contact' });
+    goTo({ to: '/about', hash: '#contact' });
   };
 
   const drawer = (
