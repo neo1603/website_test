@@ -3,9 +3,9 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Contact form leads: anyone can submit a new lead (create),
-    // but nobody can read, list, update, or delete them from the client.
-    // You'll only ever see lead data in the Firebase Console itself.
+    // Contact form leads: anyone can submit a new lead (create).
+    // Reading/updating (e.g. marking as "contacted") is limited to the
+    // signed-in admin; nothing can ever be deleted from the client.
     match /leads/{leadId} {
       allow create: if request.resource.data.keys().hasAll(['name', 'email', 'phone', 'message'])
                     && request.resource.data.name is string
@@ -13,7 +13,37 @@ service cloud.firestore {
                     && request.resource.data.name.size() < 200
                     && request.resource.data.email is string
                     && request.resource.data.message.size() < 5000;
-      allow read, update, delete: if false;
+      allow read, update: if request.auth != null;
+      allow delete: if false;
+    }
+
+    // Projects and Properties both live here, distinguished by a `category`
+    // field — public read-only for visitors; only the signed-in admin (the
+    // site owner) can add, edit, or remove listings.
+    match /listings/{listingId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Testimonials, hero banners, and team members: same pattern.
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /banners/{bannerId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /team/{memberId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Site settings (company stats, contact details) — a couple of
+    // well-known singleton documents, same public-read/admin-write pattern.
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
     }
 
     // Deny everything else by default.

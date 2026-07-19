@@ -1,19 +1,23 @@
 import React from 'react';
 import { Box, Container, Typography, Grid, Avatar } from '@mui/material';
 import { FormatQuote } from '@mui/icons-material';
+import { useCollection } from '../hooks/useCollection';
 
-const testimonials = [
+export const staticTestimonials = [
   {
+    id: 'static-1',
     quote: "We bought our plot at Green Valley Residency two years ago. The paperwork was transparent and the site visit team answered every question we had before we paid a rupee.",
     name: 'Plot buyer',
     context: 'Green Valley Residency, Vrindavan',
   },
   {
+    id: 'static-2',
     quote: "Booked a showroom at Kvaan Tower for our shop. The gated society and underground parking make it easy to recommend to other shopkeepers looking to move to Krishna Nagar.",
     name: 'Showroom owner',
     context: 'Kvaan Tower, Mathura',
   },
   {
+    id: 'static-3',
     quote: "Straightforward dealing from first call to registry. We'd been let down by a broker before this, so transparency mattered more to us than anything else.",
     name: 'Villa owner',
     context: 'Royal Heights, Mathura',
@@ -21,13 +25,16 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const { data: firestoreTestimonials } = useCollection('testimonials');
+  const testimonials = firestoreTestimonials.length > 0 ? firestoreTestimonials : staticTestimonials;
+
   return (
     <Box sx={{ py: 8, backgroundColor: 'background.default' }}>
       <Container maxWidth="lg">
         <Typography
           variant="h3"
           component="h2"
-          sx={{ fontFamily: 'Optima, Candara, "Century Gothic", sans-serif', fontWeight: 700, color: 'primary.main', mb: 1 }}
+          sx={{ fontFamily: 'Optima, Candara, "Century Gothic", sans-serif', fontWeight: 700, color: 'primary.dark', mb: 1 }}
         >
           What Our Customers Say
         </Typography>
@@ -36,23 +43,23 @@ const Testimonials = () => {
         </Typography>
 
         <Grid container spacing={3}>
-          {testimonials.map((item, index) => (
-            <Grid item xs={12} md={4} key={index}>
+          {testimonials.map((item) => (
+            <Grid item xs={12} md={4} key={item.id}>
               <Box
                 sx={{
                   height: '100%',
                   p: 3.5,
-                  borderRadius: 5,
+                  borderRadius: 3,
                   backgroundColor: 'white',
-                  border: '1px solid #DCE5DC',
-                  boxShadow: '0px 12px 28px -18px rgba(23,39,31,0.2)',
+                  border: '1px solid #E5E7EB',
+                  boxShadow: '0px 10px 24px -16px rgba(15,23,42,0.25)',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
               >
                 <FormatQuote sx={{ color: 'secondary.main', fontSize: 32, mb: 1, transform: 'scaleX(-1)' }} />
                 <Typography
-                  sx={{ fontFamily: 'Charter, Georgia, serif', color: '#3D4A41', mb: 3, flexGrow: 1, lineHeight: 1.7, fontStyle: 'italic' }}
+                  sx={{ fontFamily: 'Charter, Georgia, serif', color: 'text.primary', mb: 3, flexGrow: 1, lineHeight: 1.7, fontStyle: 'italic' }}
                 >
                   "{item.quote}"
                 </Typography>
@@ -73,10 +80,6 @@ const Testimonials = () => {
             </Grid>
           ))}
         </Grid>
-
-        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 3, textAlign: 'center' }}>
-          Sample testimonials — swap in real customer names, photos, and quotes whenever you have them.
-        </Typography>
       </Container>
     </Box>
   );

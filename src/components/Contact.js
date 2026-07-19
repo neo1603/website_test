@@ -24,6 +24,15 @@ import {
 } from '@mui/icons-material';
 import { db, isConfigured, logEvent } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useDocument } from '../hooks/useDocument';
+
+const DEFAULT_SETTINGS = {
+  phones: '+91 90842 03961, +91 80025 23318, +91 84451 50180, +91 98976 46552',
+  whatsapp: '+91 90842 03961',
+  email: 'info@dreamsbhoomi.com',
+  salesEmail: 'sales@dreamsbhoomi.com',
+  address: 'NH-2, Front of Flyover, Chhatikara, Vrindavan, Uttar Pradesh, India',
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -41,49 +50,39 @@ const Contact = () => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { data: settingsDoc } = useDocument('settings', 'general');
+  const settings = { ...DEFAULT_SETTINGS, ...settingsDoc };
+  const phoneList = settings.phones.split(',').map((p) => p.trim()).filter(Boolean);
+  const firstPhoneDigits = phoneList[0]?.replace(/\D/g, '');
+  const whatsappDigits = settings.whatsapp.replace(/\D/g, '');
 
   const contactInfo = [
     {
       icon: <Phone sx={{ fontSize: 40, color: 'primary.main' }} />,
       title: 'Call Us',
-      details: [
-        '+91 90842 03961',
-        '+91 80025 23318',
-        '+91 84451 50180',
-        '+91 98976 46552',
-      ],
-      action: 'tel:+919084203961',
+      details: phoneList,
+      action: `tel:+${firstPhoneDigits}`,
       description: 'Available 24/7 for your queries',
     },
     {
       icon: <WhatsApp sx={{ fontSize: 40, color: '#25d366' }} />,
       title: 'WhatsApp',
-      details: [
-        '+91 90842 03961',
-        'Quick Response',
-      ],
-      action: 'https://wa.me/919084203961',
+      details: [settings.whatsapp, 'Quick Response'],
+      action: `https://wa.me/${whatsappDigits}`,
       description: 'Get instant responses on WhatsApp',
     },
     {
       icon: <Email sx={{ fontSize: 40, color: 'primary.main' }} />,
       title: 'Email Us',
-      details: [
-        'info@dreamsbhoomi.com',
-        'sales@dreamsbhoomi.com',
-      ],
-      action: 'mailto:info@dreamsbhoomi.com',
+      details: [settings.email, settings.salesEmail],
+      action: `mailto:${settings.email}`,
       description: 'Send us detailed inquiries',
     },
     {
       icon: <LocationOn sx={{ fontSize: 40, color: 'primary.main' }} />,
       title: 'Visit Us',
-      details: [
-        'NH-2, Front of Flyover,',
-        'Chhatikara, Vrindavan,',
-        'Uttar Pradesh, India',
-      ],
-      action: 'https://maps.google.com/?q=NH-2,+Front+of+Flyover,+Chhatikara,+Vrindavan,+Uttar+Pradesh,+India',
+      details: [settings.address],
+      action: `https://maps.google.com/?q=${encodeURIComponent(settings.address)}`,
       description: 'Schedule a site visit',
     },
   ];
@@ -346,7 +345,7 @@ const Contact = () => {
             }}
           >
             <iframe
-              src="https://www.google.com/maps?q=NH-2,+Front+of+Flyover,+Chhatikara,+Vrindavan,+Uttar+Pradesh,+India&output=embed"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(settings.address)}&output=embed`}
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -379,7 +378,7 @@ const Contact = () => {
             <Button
               variant="contained"
               size="large"
-              href="tel:+919084203961"
+              href={`tel:+${firstPhoneDigits}`}
               startIcon={<Phone />}
               sx={{
                 backgroundColor: 'secondary.main',
@@ -396,7 +395,7 @@ const Contact = () => {
             <Button
               variant="outlined"
               size="large"
-              href="https://wa.me/919084203961"
+              href={`https://wa.me/${whatsappDigits}`}
               target="_blank"
               rel="noopener noreferrer"
               startIcon={<WhatsApp />}

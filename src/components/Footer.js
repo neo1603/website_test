@@ -28,10 +28,26 @@ import {
   Payment,
   Support,
 } from '@mui/icons-material';
+import { useDocument } from '../hooks/useDocument';
+
+const DEFAULT_SETTINGS = {
+  phones: '+91 90842 03961, +91 80025 23318, +91 84451 50180, +91 98976 46552',
+  whatsapp: '+91 90842 03961',
+  email: 'info@dreamsbhoomi.com',
+  salesEmail: 'sales@dreamsbhoomi.com',
+  address: 'NH-2, Front of Flyover, Chhatikara, Vrindavan, Uttar Pradesh, India',
+  facebook: 'https://facebook.com/dreamsbhoomi',
+  instagram: 'https://instagram.com/dreamsbhoomi',
+};
 
 const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { data: settingsDoc } = useDocument('settings', 'general');
+  const settings = { ...DEFAULT_SETTINGS, ...settingsDoc };
+  const phoneList = settings.phones.split(',').map((p) => p.trim()).filter(Boolean);
+  const firstPhoneDigits = phoneList[0]?.replace(/\D/g, '');
+  const whatsappDigits = settings.whatsapp.replace(/\D/g, '');
 
   const services = [
     { name: 'Residential Plots', icon: <Home />, description: 'Premium residential plots with modern amenities' },
@@ -62,52 +78,34 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: 'Facebook', icon: <Facebook />, href: 'https://facebook.com/dreamsbhoomi', color: '#1877f2' },
-    { name: 'Twitter', icon: <Twitter />, href: 'https://twitter.com/dreamsbhoomi', color: '#1da1f2' },
-    { name: 'Instagram', icon: <Instagram />, href: 'https://instagram.com/dreamsbhoomi', color: '#e4405f' },
-    { name: 'LinkedIn', icon: <LinkedIn />, href: 'https://linkedin.com/company/dreamsbhoomi', color: '#0077b5' },
-    { name: 'YouTube', icon: <YouTube />, href: 'https://youtube.com/dreamsbhoomi', color: '#ff0000' },
+    { name: 'Facebook', icon: <Facebook />, href: settings.facebook, color: '#1877f2' },
+    { name: 'Instagram', icon: <Instagram />, href: settings.instagram, color: '#e4405f' },
   ];
 
   const contactInfo = [
     {
       icon: <Phone />,
       title: 'Call Us',
-      details: [
-        '+91 90842 03961',
-        '+91 80025 23318',
-        '+91 84451 50180',
-        '+91 98976 46552',
-      ],
-      action: 'tel:+919084203961',
+      details: phoneList,
+      action: `tel:+${firstPhoneDigits}`,
     },
     {
       icon: <WhatsApp />,
       title: 'WhatsApp',
-      details: [
-        '+91 90842 03961',
-        'Available 24/7',
-      ],
-      action: 'https://wa.me/919084203961',
+      details: [settings.whatsapp, 'Available 24/7'],
+      action: `https://wa.me/${whatsappDigits}`,
     },
     {
       icon: <Email />,
       title: 'Email Us',
-      details: [
-        'info@dreamsbhoomi.com',
-        'sales@dreamsbhoomi.com',
-      ],
-      action: 'mailto:info@dreamsbhoomi.com',
+      details: [settings.email, settings.salesEmail],
+      action: `mailto:${settings.email}`,
     },
     {
       icon: <LocationOn />,
       title: 'Visit Us',
-      details: [
-        'NH-2, Front of Flyover,',
-        'Chhatikara, Vrindavan,',
-        'Uttar Pradesh, India',
-      ],
-      action: 'https://maps.google.com/?q=NH-2,+Front+of+Flyover,+Chhatikara,+Vrindavan,+Uttar+Pradesh,+India',
+      details: [settings.address],
+      action: `https://maps.google.com/?q=${encodeURIComponent(settings.address)}`,
     },
   ];
 
@@ -339,7 +337,7 @@ const Footer = () => {
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
                          <Link
-               href="tel:+919084203961"
+               href={`tel:+${firstPhoneDigits}`}
               sx={{
                 backgroundColor: 'secondary.main',
                 color: 'white',
@@ -362,7 +360,7 @@ const Footer = () => {
               Call Now
             </Link>
                          <Link
-               href="https://wa.me/919084203961"
+               href={`https://wa.me/${whatsappDigits}`}
               target="_blank"
               rel="noopener noreferrer"
               sx={{

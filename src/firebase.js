@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, isSupported, logEvent as firebaseLogEvent } from 'firebase/analytics';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 // Firebase config is read from environment variables (see .env.example).
 // Create a real .env file with your project's values — never commit real
@@ -20,11 +21,13 @@ const isConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
 let app = null;
 let db = null;
 let analytics = null;
+let auth = null;
 
 if (isConfigured) {
   try {
     app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+    auth = getAuth(app);
     isSupported().then((supported) => {
       if (supported) {
         analytics = getAnalytics(app);
@@ -47,5 +50,5 @@ export const logEvent = (eventName, params) => {
   }
 };
 
-export { db, isConfigured };
+export { db, auth, isConfigured };
 export default app;

@@ -6,14 +6,16 @@ import {
   Box,
 } from '@mui/material';
 import { useLanguage } from '../context/LanguageContext';
+import { useDocument } from '../hooks/useDocument';
 
 const AboutUs = () => {
   const { t } = useLanguage();
+  const { data: companyDetails } = useDocument('settings', 'companyDetails');
   const stats = [
-    { value: '2008', label: t('stat_founded') },
-    { value: '1,000+', label: t('stat_families') },
-    { value: '50+', label: t('stat_projects') },
-    { value: '15+', label: t('stat_brij_years') },
+    { value: companyDetails?.founded || '2008', label: t('stat_founded') },
+    { value: companyDetails?.familiesServed || '1,000+', label: t('stat_families') },
+    { value: companyDetails?.projectsDelivered || '50+', label: t('stat_projects') },
+    { value: companyDetails?.yearsInBrij || '15+', label: t('stat_brij_years') },
   ];
 
   return (

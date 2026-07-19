@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import TrustBadges from './components/TrustBadges';
 import Projects from './components/Projects';
+import FeaturedProperties from './components/FeaturedProperties';
+import WhyChooseUs from './components/WhyChooseUs';
 import LoanCalculator from './components/LoanCalculator';
 import Testimonials from './components/Testimonials';
 import Events from './components/Events';
@@ -14,6 +17,22 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MobileActionBar from './components/MobileActionBar';
 import ProjectDetail from './pages/ProjectDetail';
+import ProjectsListPage from './pages/ProjectsListPage';
+import PropertiesListPage from './pages/PropertiesListPage';
+import FloatingContactButtons from './components/FloatingContactButtons';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminLayout from './pages/admin/AdminLayout';
+import Dashboard from './pages/admin/Dashboard';
+import ListingsAdmin from './pages/admin/ListingsAdmin';
+import ListingForm from './pages/admin/ListingForm';
+import EnquiriesAdmin from './pages/admin/EnquiriesAdmin';
+import TestimonialsAdmin from './pages/admin/TestimonialsAdmin';
+import BannersAdmin from './pages/admin/BannersAdmin';
+import CompanyDetailsAdmin from './pages/admin/CompanyDetailsAdmin';
+import AnalyticsAdmin from './pages/admin/AnalyticsAdmin';
+import SettingsAdmin from './pages/admin/SettingsAdmin';
+import TeamAdmin from './pages/admin/TeamAdmin';
 import { LanguageProvider } from './context/LanguageContext';
 import { logEvent } from './firebase';
 
@@ -25,33 +44,61 @@ const AnalyticsTracker = () => {
   return null;
 };
 
+// Lets header/footer links like "/#contact" work from any page — scrolls to
+// the section once the target route has rendered.
+const ScrollToHash = () => {
+  const location = useLocation();
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    const timeout = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [location.pathname, location.hash]);
+  return null;
+};
+
+const PublicLayout = () => (
+  <>
+    <Header />
+    <Outlet />
+    <MobileActionBar />
+    <FloatingContactButtons />
+    <Footer />
+  </>
+);
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#146B52', // Oasis — jade
-      light: '#2F8F70',
-      dark: '#0B4636',
+      main: '#1E293B', // Portal — charcoal-navy
+      light: '#334155',
+      dark: '#0F172A',
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#F2764F', // Oasis — coral
-      light: '#F5987A',
-      dark: '#C85A35',
+      main: '#C8952B', // Portal — single gold accent
+      light: '#DDB05C',
+      dark: '#9C6F16',
       contrastText: '#ffffff',
     },
     background: {
-      default: '#F3F6EF',
+      default: '#FAFAFA',
       paper: '#ffffff',
     },
     text: {
-      primary: '#212121',
-      secondary: '#757575',
+      primary: '#1E2532',
+      secondary: '#6B7280',
     },
     success: {
-      main: '#4caf50',
+      main: '#2F8F5B', // Completed
     },
     warning: {
-      main: '#ff9800',
+      main: '#C2540C', // Ongoing — kept distinct from the gold accent
+    },
+    info: {
+      main: '#3B6E91', // Upcoming — same steel-blue family as the Yamuna touch elsewhere on site
     },
     error: {
       main: '#f44336',
@@ -114,7 +161,7 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 16,
+    borderRadius: 10,
   },
   shadows: [
     'none',
@@ -147,7 +194,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 100,
+          borderRadius: 8,
           textTransform: 'none',
           fontWeight: 700,
           boxShadow: 'none',
@@ -165,11 +212,11 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 20,
-          boxShadow: '0px 12px 28px -18px rgba(23,39,31,0.35)',
-          border: '1px solid #dce5dc',
+          borderRadius: 12,
+          boxShadow: '0px 10px 24px -16px rgba(15,23,42,0.3)',
+          border: '1px solid #E5E7EB',
           '&:hover': {
-            boxShadow: '0px 16px 34px -16px rgba(23,39,31,0.4)',
+            boxShadow: '0px 14px 28px -14px rgba(15,23,42,0.35)',
             transform: 'translateY(-2px)',
             transition: 'all 0.3s ease',
           },
@@ -179,7 +226,7 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
+          borderRadius: 10,
         },
       },
     },
@@ -191,32 +238,64 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <LanguageProvider>
-        <BrowserRouter>
-          <div className="App">
-            <AnalyticsTracker />
-            <Header />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Hero />
-                    <TrustBadges />
-                    <Projects />
-                    <LoanCalculator />
-                    <Testimonials />
-                    <Events />
-                    <AboutUs />
-                    <Contact />
-                  </>
-                }
-              />
-              <Route path="/project/:id" element={<ProjectDetail />} />
-            </Routes>
-            <MobileActionBar />
-            <Footer />
-          </div>
-        </BrowserRouter>
+        <AuthProvider>
+          <BrowserRouter>
+            <div className="App">
+              <AnalyticsTracker />
+              <ScrollToHash />
+              <Routes>
+                <Route element={<PublicLayout />}>
+                  <Route
+                    path="/"
+                    element={
+                      <>
+                        <Hero />
+                        <TrustBadges />
+                        <Projects />
+                        <FeaturedProperties />
+                        <WhyChooseUs />
+                        <LoanCalculator />
+                        <Testimonials />
+                        <Events />
+                        <AboutUs />
+                        <Contact />
+                      </>
+                    }
+                  />
+                  <Route path="/projects" element={<ProjectsListPage />} />
+                  <Route path="/properties" element={<PropertiesListPage />} />
+                  <Route path="/project/:id" element={<ProjectDetail />} />
+                  <Route path="/property/:id" element={<ProjectDetail />} />
+                </Route>
+
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<Dashboard />} />
+                  <Route path="projects" element={<ListingsAdmin category="Project" />} />
+                  <Route path="projects/new" element={<ListingForm />} />
+                  <Route path="projects/:id/edit" element={<ListingForm />} />
+                  <Route path="properties" element={<ListingsAdmin category="Property" />} />
+                  <Route path="properties/new" element={<ListingForm />} />
+                  <Route path="properties/:id/edit" element={<ListingForm />} />
+                  <Route path="enquiries" element={<EnquiriesAdmin />} />
+                  <Route path="testimonials" element={<TestimonialsAdmin />} />
+                  <Route path="banners" element={<BannersAdmin />} />
+                  <Route path="company-details" element={<CompanyDetailsAdmin />} />
+                  <Route path="analytics" element={<AnalyticsAdmin />} />
+                  <Route path="settings" element={<SettingsAdmin />} />
+                  <Route path="team" element={<TeamAdmin />} />
+                </Route>
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
   );
