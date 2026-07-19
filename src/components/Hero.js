@@ -58,151 +58,187 @@ const Hero = () => {
     navigate(`${basePath}${params.toString() ? `?${params.toString()}` : ''}`);
   };
 
+  const stats = [
+    { value: '1,000+', label: t('stat_families') },
+    { value: '50+', label: t('stat_projects') },
+    { value: '15+', label: t('stat_years') },
+  ];
+
+  const arrowSx = {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    color: 'white',
+    cursor: 'pointer',
+    zIndex: 3,
+    backgroundColor: 'rgba(15,23,42,0.45)',
+    borderRadius: '50%',
+    width: 36,
+    height: 36,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.85,
+    '&:hover': { opacity: 1, backgroundColor: 'rgba(15,23,42,0.65)' },
+  };
+
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default }}>
       <Box
         sx={{
-          position: 'relative',
-          overflow: 'hidden',
-          minHeight: { xs: 480, md: 560 },
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
           mt: { xs: '56px', md: '64px' },
-          py: { xs: 4, md: 0 },
+          minHeight: { xs: 'auto', md: 520 },
         }}
       >
-        {SLIDES.map((s, i) => (
-          <Box
-            key={s.image}
-            component="img"
-            src={s.image}
-            alt=""
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: i === slide ? 1 : 0,
-              transition: 'opacity 1s ease',
-            }}
-          />
-        ))}
+        {/* Text column — 25% on desktop, appears below the banner on mobile */}
         <Box
           sx={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(90deg, rgba(15,23,42,0.82) 0%, rgba(15,23,42,0.45) 55%, rgba(15,23,42,0.25) 100%)',
+            order: { xs: 2, md: 0 },
+            width: { xs: '100%', md: '25%' },
+            flexShrink: 0,
+            backgroundColor: 'primary.dark',
+            color: '#fff',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            gap: 2.5,
+            p: { xs: 3, md: 3 },
+            py: { xs: 5, md: 4 },
           }}
-        />
-
-        <Box
-          onClick={() => setSlide((slide - 1 + SLIDES.length) % SLIDES.length)}
-          sx={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'white', cursor: 'pointer', zIndex: 3, opacity: 0.8, '&:hover': { opacity: 1 } }}
         >
-          <ArrowBackIos fontSize="small" />
-        </Box>
-        <Box
-          onClick={() => setSlide((slide + 1) % SLIDES.length)}
-          sx={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', color: 'white', cursor: 'pointer', zIndex: 3, opacity: 0.8, '&:hover': { opacity: 1 } }}
-        >
-          <ArrowForwardIos fontSize="small" />
+          <Typography variant="overline" sx={{ color: 'secondary.light', fontWeight: 700, letterSpacing: '0.15em', display: 'block' }}>
+            {t('hero_eyebrow')}
+          </Typography>
+
+          <Typography
+            variant="h1"
+            sx={{
+              fontFamily: 'Optima, Candara, "Century Gothic", sans-serif',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: { xs: '2rem', sm: '2.2rem', md: '1.6rem', lg: '1.8rem', xl: '2rem' },
+              lineHeight: 1.2,
+            }}
+          >
+            {t('hero_title_1')}{' '}
+            <Box component="span" sx={{ color: 'secondary.light' }}>
+              {t('hero_title_accent')}
+            </Box>{' '}
+            {t('hero_title_2')}
+          </Typography>
+
+          <Typography sx={{ fontFamily: 'Charter, Georgia, serif', color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem', lineHeight: 1.65 }}>
+            {t('hero_subtitle')}
+          </Typography>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => { logEvent('select_content', { item: 'hero_view_projects' }); navigate('/projects'); }}
+              sx={{ backgroundColor: 'secondary.main', color: '#fff', py: 1.25, '&:hover': { backgroundColor: 'secondary.dark' } }}
+            >
+              {t('hero_view_projects')}
+            </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              href="tel:+919084203961"
+              onClick={() => logEvent('contact', { method: 'call', location: 'hero' })}
+              startIcon={<Phone fontSize="small" />}
+              sx={{ borderColor: 'rgba(255,255,255,0.5)', color: '#fff', py: 1.25, '&:hover': { borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' } }}
+            >
+              {t('hero_call_now')}
+            </Button>
+            <Button
+              fullWidth
+              variant="outlined"
+              href="https://wa.me/919084203961"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => logEvent('contact', { method: 'whatsapp', location: 'hero' })}
+              startIcon={<WhatsApp fontSize="small" />}
+              sx={{ borderColor: 'rgba(255,255,255,0.5)', color: '#fff', py: 1.25, '&:hover': { borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' } }}
+            >
+              {t('hero_whatsapp')}
+            </Button>
+          </Box>
+
+          <Box sx={{ display: 'flex', gap: 2.5, flexWrap: 'wrap', pt: 1.5, borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+            {stats.map((stat) => (
+              <Box key={stat.label}>
+                <Typography sx={{ fontFamily: 'Optima, Candara, sans-serif', fontWeight: 700, fontSize: '1.15rem', color: '#fff' }}>
+                  {stat.value}
+                </Typography>
+                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.03em', fontSize: '0.62rem', display: 'block' }}>
+                  {stat.label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
 
-        <Box sx={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 1, zIndex: 3 }}>
+        {/* Banner column — 75% on desktop, appears on top on mobile */}
+        <Box
+          sx={{
+            order: { xs: 1, md: 0 },
+            width: { xs: '100%', md: '75%' },
+            position: 'relative',
+            overflow: 'hidden',
+            height: { xs: 300, sm: 380, md: 'auto' },
+          }}
+        >
           {SLIDES.map((s, i) => (
             <Box
               key={s.image}
-              onClick={() => setSlide(i)}
+              component="img"
+              src={s.image}
+              alt=""
               sx={{
-                width: i === slide ? 22 : 8,
-                height: 8,
-                borderRadius: 4,
-                backgroundColor: i === slide ? 'secondary.main' : 'rgba(255,255,255,0.5)',
-                cursor: 'pointer',
-                transition: 'width 0.3s ease',
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                opacity: i === slide ? 1 : 0,
+                transition: 'opacity 1s ease',
               }}
             />
           ))}
-        </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.4) 100%)',
+            }}
+          />
 
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ maxWidth: 560 }}>
-            <Typography variant="overline" sx={{ color: theme.palette.secondary.light, fontWeight: 700, letterSpacing: '0.18em', mb: 2, display: 'block' }}>
-              {t('hero_eyebrow')}
-            </Typography>
-
-            <Typography
-              variant="h1"
-              sx={{
-                fontFamily: 'Optima, Candara, "Century Gothic", sans-serif',
-                color: '#ffffff',
-                fontWeight: 700,
-                fontSize: { xs: '2.2rem', md: '3rem', lg: '3.2rem' },
-                mb: 2,
-                lineHeight: 1.14,
-              }}
-            >
-              {t('hero_title_1')}{' '}
-              <Box component="span" sx={{ color: theme.palette.secondary.light }}>
-                {t('hero_title_accent')}
-              </Box>{' '}
-              {t('hero_title_2')}
-            </Typography>
-
-            <Typography variant="body1" sx={{ fontFamily: 'Charter, Georgia, serif', color: 'rgba(255,255,255,0.85)', mb: 3, fontSize: '1.05rem', lineHeight: 1.7 }}>
-              {t('hero_subtitle')}
-            </Typography>
-
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 4 }}>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => { logEvent('select_content', { item: 'hero_view_projects' }); navigate('/projects'); }}
-                sx={{ backgroundColor: 'secondary.main', color: '#fff', px: 4, py: 1.5, fontSize: '1rem', '&:hover': { backgroundColor: 'secondary.dark' } }}
-              >
-                {t('hero_view_projects')}
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                href="tel:+919084203961"
-                onClick={() => logEvent('contact', { method: 'call', location: 'hero' })}
-                sx={{ borderColor: '#fff', borderWidth: 1.5, color: '#fff', px: 3, py: 1.5, '&:hover': { borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' } }}
-              >
-                <Phone sx={{ mr: 1 }} fontSize="small" />
-                {t('hero_call_now')}
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                href="https://wa.me/919084203961"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => logEvent('contact', { method: 'whatsapp', location: 'hero' })}
-                sx={{ borderColor: '#fff', borderWidth: 1.5, color: '#fff', px: 3, py: 1.5, '&:hover': { borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' } }}
-              >
-                <WhatsApp sx={{ mr: 1 }} fontSize="small" />
-                {t('hero_whatsapp')}
-              </Button>
-            </Box>
-
-            <Box sx={{ display: 'flex', gap: { xs: 3, md: 5 }, flexWrap: 'wrap' }}>
-              {[
-                { value: '1,000+', label: t('stat_families') },
-                { value: '50+', label: t('stat_projects') },
-                { value: '15+', label: t('stat_years') },
-              ].map((stat) => (
-                <Box key={stat.label}>
-                  <Typography variant="h5" sx={{ fontFamily: 'Optima, Candara, sans-serif', fontWeight: 700, color: '#fff' }}>
-                    {stat.value}
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    {stat.label}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
+          <Box onClick={() => setSlide((slide - 1 + SLIDES.length) % SLIDES.length)} sx={{ ...arrowSx, left: 16 }}>
+            <ArrowBackIos fontSize="small" sx={{ ml: 0.5 }} />
           </Box>
-        </Container>
+          <Box onClick={() => setSlide((slide + 1) % SLIDES.length)} sx={{ ...arrowSx, right: 16 }}>
+            <ArrowForwardIos fontSize="small" />
+          </Box>
+
+          <Box sx={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 1, zIndex: 3 }}>
+            {SLIDES.map((s, i) => (
+              <Box
+                key={s.image}
+                onClick={() => setSlide(i)}
+                sx={{
+                  width: i === slide ? 22 : 8,
+                  height: 8,
+                  borderRadius: 4,
+                  backgroundColor: i === slide ? 'secondary.main' : 'rgba(255,255,255,0.5)',
+                  cursor: 'pointer',
+                  transition: 'width 0.3s ease',
+                }}
+              />
+            ))}
+          </Box>
+        </Box>
       </Box>
 
       {/* Search bar, overlapping the hero/content boundary */}
