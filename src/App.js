@@ -1,32 +1,46 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import TrustBadges from './components/TrustBadges';
 import Projects from './components/Projects';
+import LoanCalculator from './components/LoanCalculator';
+import Testimonials from './components/Testimonials';
 import Events from './components/Events';
 import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import MobileActionBar from './components/MobileActionBar';
 import ProjectDetail from './pages/ProjectDetail';
+import { LanguageProvider } from './context/LanguageContext';
+import { logEvent } from './firebase';
+
+const AnalyticsTracker = () => {
+  const location = useLocation();
+  useEffect(() => {
+    logEvent('page_view', { page_path: location.pathname });
+  }, [location.pathname]);
+  return null;
+};
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#0D0D0D', // Split Frame — ink black
-      light: '#3D3D3D',
-      dark: '#000000',
+      main: '#146B52', // Oasis — jade
+      light: '#2F8F70',
+      dark: '#0B4636',
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#FFB100', // Split Frame — amber
-      light: '#FFCF6B',
-      dark: '#A86D00',
-      contrastText: '#1A1200',
+      main: '#F2764F', // Oasis — coral
+      light: '#F5987A',
+      dark: '#C85A35',
+      contrastText: '#ffffff',
     },
     background: {
-      default: '#ffffff',
+      default: '#F3F6EF',
       paper: '#ffffff',
     },
     text: {
@@ -100,7 +114,7 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 16,
   },
   shadows: [
     'none',
@@ -133,17 +147,17 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 100,
           textTransform: 'none',
-          fontWeight: 500,
-          boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+          fontWeight: 700,
+          boxShadow: 'none',
           '&:hover': {
-            boxShadow: '0px 4px 8px rgba(0,0,0,0.15)',
+            boxShadow: 'none',
           },
         },
         contained: {
           '&:hover': {
-            boxShadow: '0px 4px 8px rgba(0,0,0,0.2)',
+            boxShadow: 'none',
           },
         },
       },
@@ -151,10 +165,11 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          boxShadow: '0px 2px 8px rgba(0,0,0,0.1)',
+          borderRadius: 20,
+          boxShadow: '0px 12px 28px -18px rgba(23,39,31,0.35)',
+          border: '1px solid #dce5dc',
           '&:hover': {
-            boxShadow: '0px 4px 16px rgba(0,0,0,0.15)',
+            boxShadow: '0px 16px 34px -16px rgba(23,39,31,0.4)',
             transform: 'translateY(-2px)',
             transition: 'all 0.3s ease',
           },
@@ -164,7 +179,7 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 16,
         },
       },
     },
@@ -175,27 +190,34 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <div className="App">
-          <Header />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <Hero />
-                  <Projects />
-                  <Events />
-                  <AboutUs />
-                  <Contact />
-                </>
-              }
-            />
-            <Route path="/project/:id" element={<ProjectDetail />} />
-          </Routes>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <LanguageProvider>
+        <BrowserRouter>
+          <div className="App">
+            <AnalyticsTracker />
+            <Header />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Hero />
+                    <TrustBadges />
+                    <Projects />
+                    <LoanCalculator />
+                    <Testimonials />
+                    <Events />
+                    <AboutUs />
+                    <Contact />
+                  </>
+                }
+              />
+              <Route path="/project/:id" element={<ProjectDetail />} />
+            </Routes>
+            <MobileActionBar />
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

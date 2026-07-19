@@ -5,13 +5,15 @@ import {
   Grid,
   Box,
 } from '@mui/material';
+import { useLanguage } from '../context/LanguageContext';
 
 const AboutUs = () => {
+  const { t } = useLanguage();
   const stats = [
-    { value: '2008', label: 'Founded' },
-    { value: '1,000+', label: 'Happy Families' },
-    { value: '50+', label: 'Projects' },
-    { value: '15+', label: 'Years in Brij' },
+    { value: '2008', label: t('stat_founded') },
+    { value: '1,000+', label: t('stat_families') },
+    { value: '50+', label: t('stat_projects') },
+    { value: '15+', label: t('stat_brij_years') },
   ];
 
   return (
@@ -19,24 +21,17 @@ const AboutUs = () => {
       <Container maxWidth="lg">
         <Grid container spacing={6} alignItems="center">
           <Grid item xs={12} md={7}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 800, color: 'primary.main', mb: 3 }}>
-              About DreamsBhoomi
+            <Typography variant="h3" component="h2" sx={{ fontFamily: 'Optima, Candara, "Century Gothic", sans-serif', fontWeight: 700, color: 'primary.main', mb: 3 }}>
+              {t('about_title')}
             </Typography>
             <Typography variant="body1" sx={{ color: 'text.secondary', mb: 2, lineHeight: 1.8 }}>
-              Established in 2008, DreamsBhoomi Developers is a real estate and construction business
-              based in the Mathura–Vrindavan region, dealing in residential plots, flats, villas, and
-              commercial properties.
+              {t('about_p1')}
             </Typography>
             <Typography variant="body1" sx={{ color: 'text.secondary', mb: 2, lineHeight: 1.8 }}>
-              Our current flagship project, Kvaan Tower, sits opposite Hotel Madhuvan in Krishna Nagar,
-              Mathura — a gated, MVDA-approved development with showrooms on the ground and first floors
-              and flats above. Alongside it, we handle commercial listings across the region, including
-              high-visibility properties like our Goverdhan Chauraha shop.
+              {t('about_p2')}
             </Typography>
             <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8 }}>
-              With over 15 years of experience and 1,000+ families served, we deal in real estate in the
-              most ethical way we know how, to help our customers in Shri Dham Vrindavan find land, homes,
-              and commercial space they can trust.
+              {t('about_p3')}
             </Typography>
           </Grid>
           <Grid item xs={12} md={5}>
@@ -45,17 +40,31 @@ const AboutUs = () => {
                 <Grid item xs={6} key={stat.label}>
                   <Box
                     sx={{
+                      position: 'relative',
                       backgroundColor: 'primary.main',
                       color: 'white',
-                      borderRadius: 1,
+                      borderRadius: 5,
                       p: 3,
                       textAlign: 'center',
+                      overflow: 'hidden',
                     }}
                   >
-                    <Typography variant="h4" sx={{ fontWeight: 800, color: 'secondary.main' }}>
+                    <Box
+                      component="svg"
+                      viewBox="0 0 80 80"
+                      sx={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.06 }}
+                    >
+                      <defs>
+                        <pattern id={`scallop-${stat.label}`} width="16" height="16" patternUnits="userSpaceOnUse">
+                          <path d="M0 16 A 8 8 0 0 1 16 16" fill="none" stroke="#ffffff" strokeWidth="1.5" />
+                        </pattern>
+                      </defs>
+                      <rect width="80" height="80" fill={`url(#scallop-${stat.label})`} />
+                    </Box>
+                    <Typography variant="h4" sx={{ position: 'relative', fontFamily: 'Optima, Candara, sans-serif', fontWeight: 700, color: 'secondary.light' }}>
                       {stat.value}
                     </Typography>
-                    <Typography variant="body2" sx={{ opacity: 0.8, textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.75rem' }}>
+                    <Typography variant="body2" sx={{ position: 'relative', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: '0.75rem' }}>
                       {stat.label}
                     </Typography>
                   </Box>

@@ -10,8 +10,10 @@ import {
   Box,
 } from '@mui/material';
 import { CalendarMonth, Groups } from '@mui/icons-material';
+import { useLanguage } from '../context/LanguageContext';
 
 const Events = () => {
+  const { t } = useLanguage();
   const celebrations = [
     {
       id: 1,
@@ -57,12 +59,12 @@ const Events = () => {
         <Typography
           variant="h3"
           component="h2"
-          sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}
+          sx={{ fontFamily: 'Optima, Candara, "Century Gothic", sans-serif', fontWeight: 700, color: 'primary.main', mb: 1 }}
         >
-          Events & Celebrations
+          {t('events_title')}
         </Typography>
         <Typography variant="h6" sx={{ color: 'text.secondary', mb: 6, fontWeight: 400, maxWidth: 700 }}>
-          Moments from our journey with the families and partners who make DreamsBhoomi what it is.
+          {t('events_subtitle')}
         </Typography>
 
         <Grid container spacing={3}>
@@ -73,33 +75,29 @@ const Events = () => {
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  borderRadius: 1,
-                  border: '1px solid',
-                  borderColor: 'grey.200',
-                  boxShadow: 'none',
                   transition: 'border-color 0.2s ease',
-                  '&:hover': { borderColor: 'secondary.main' },
+                  '&:hover': { borderColor: 'primary.main' },
                 }}
               >
-                <Box sx={{ position: 'relative' }}>
+                <Box sx={{ position: 'relative', p: 1.5, pb: 0 }}>
                   <CardMedia
                     component="img"
-                    height="160"
+                    height="150"
                     image={event.image}
                     alt={event.title}
-                    sx={{ objectFit: 'cover' }}
+                    sx={{ objectFit: 'cover', borderRadius: 3 }}
                   />
                   <Chip
                     label={event.category}
                     size="small"
                     sx={{
                       position: 'absolute',
-                      top: 12,
-                      left: 12,
-                      backgroundColor: 'secondary.main',
-                      color: '#1A1200',
+                      top: 24,
+                      left: 24,
+                      backgroundColor: 'rgba(255,255,255,0.94)',
+                      color: 'primary.dark',
                       fontWeight: 700,
-                      borderRadius: 0.5,
+                      borderRadius: 100,
                     }}
                   />
                 </Box>

@@ -1,0 +1,24 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Contact form leads: anyone can submit a new lead (create),
+    // but nobody can read, list, update, or delete them from the client.
+    // You'll only ever see lead data in the Firebase Console itself.
+    match /leads/{leadId} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'phone', 'message'])
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() < 200
+                    && request.resource.data.email is string
+                    && request.resource.data.message.size() < 5000;
+      allow read, update, delete: if false;
+    }
+
+    // Deny everything else by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

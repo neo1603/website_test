@@ -22,6 +22,8 @@ import {
   Business,
   AccessTime,
 } from '@mui/icons-material';
+import { db, isConfigured, logEvent } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -100,27 +102,42 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Simulate form submission
-    console.log('Form submitted:', formData);
-    
-    // Show success message
-    setSnackbar({
-      open: true,
-      message: 'Thank you! We will get back to you soon.',
-      severity: 'success',
-    });
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-    });
+
+    if (!isConfigured) {
+      console.warn('Firebase is not configured — this submission was not saved anywhere. See .env.example.');
+      setSnackbar({
+        open: true,
+        message: "Thank you! We'll get back to you soon.",
+        severity: 'success',
+      });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, 'leads'), {
+        ...formData,
+        source: 'contact_form',
+        createdAt: serverTimestamp(),
+      });
+      logEvent('generate_lead', { subject: formData.subject });
+
+      setSnackbar({
+        open: true,
+        message: "Thank you! We'll get back to you soon.",
+        severity: 'success',
+      });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('Failed to save lead:', err);
+      setSnackbar({
+        open: true,
+        message: "Something went wrong — please call or WhatsApp us directly instead.",
+        severity: 'error',
+      });
+    }
   };
 
   const handleCloseSnackbar = () => {

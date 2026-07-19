@@ -15,17 +15,20 @@ import {
   Container,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useLanguage } from '../context/LanguageContext';
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { lang, setLang, t } = useLanguage();
 
   const menuItems = [
-    { text: 'Portfolio', href: '#projects' },
-    { text: 'Events', href: '#events' },
-    { text: 'About', href: '#about' },
-    { text: 'Contact', href: '#contact' },
+    { text: t('nav_portfolio'), href: '#projects' },
+    { text: t('nav_calculator'), href: '#loan-calculator' },
+    { text: t('nav_events'), href: '#events' },
+    { text: t('nav_about'), href: '#about' },
+    { text: t('nav_contact'), href: '#contact' },
   ];
 
   const handleDrawerToggle = () => {
@@ -69,9 +72,9 @@ const Header = () => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: theme.palette.primary.main,
-        boxShadow: theme.shadows[4],
-        borderBottom: `1px solid rgba(255,255,255,0.1)`,
+        backgroundColor: theme.palette.background.default,
+        boxShadow: 'none',
+        borderBottom: `1px solid #DCE5DC`,
       }}
       elevation={0}
     >
@@ -89,7 +92,7 @@ const Header = () => {
                 variant="h5"
                 component="div"
                 sx={{
-                  color: '#F5F4F0',
+                  color: theme.palette.primary.dark,
                   fontWeight: 700,
                   fontSize: '1.8rem',
                   cursor: 'pointer',
@@ -101,7 +104,7 @@ const Header = () => {
                 variant="h4"
                 component="div"
                 sx={{
-                  background: `linear-gradient(45deg, ${theme.palette.secondary.main}, ${theme.palette.secondary.light})`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   fontWeight: 800,
@@ -116,7 +119,7 @@ const Header = () => {
                 variant="h5"
                 component="div"
                 sx={{
-                  color: '#F5F4F0',
+                  color: theme.palette.primary.dark,
                   fontWeight: 700,
                   fontSize: '1.8rem',
                   cursor: 'pointer',
@@ -128,6 +131,7 @@ const Header = () => {
             <Typography
               variant="caption"
               sx={{
+                display: { xs: 'none', sm: 'block' },
                 color: theme.palette.secondary.main,
                 fontWeight: 500,
                 fontSize: '0.8rem',
@@ -138,44 +142,72 @@ const Header = () => {
             </Typography>
           </Box>
 
-          {isMobile ? (
-            <IconButton
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box
               sx={{
-                color: '#F5F4F0',
+                display: 'flex',
+                border: `1.5px solid ${theme.palette.primary.main}`,
+                borderRadius: 100,
+                overflow: 'hidden',
               }}
             >
-              <MenuIcon />
-            </IconButton>
-          ) : (
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              {menuItems.map((item) => (
-                <Button
-                  key={item.text}
-                  onClick={() => scrollToSection(item.href)}
+              {['en', 'hi'].map((code) => (
+                <Box
+                  key={code}
+                  onClick={() => setLang(code)}
                   sx={{
-                    color: '#F5F4F0',
-                    fontWeight: 600,
-                    textTransform: 'none',
-                    fontSize: '1rem',
-                    borderRadius: 2,
-                    px: 2,
-                    '&:hover': {
-                      backgroundColor: theme.palette.secondary.main,
-                      color: '#1A1200',
-                      transform: 'translateY(-1px)',
-                      boxShadow: theme.shadows[4],
-                    },
-                    transition: 'all 0.3s ease',
+                    px: 1.5,
+                    py: 0.4,
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    color: lang === code ? '#ffffff' : theme.palette.primary.dark,
+                    backgroundColor: lang === code ? theme.palette.primary.main : 'transparent',
                   }}
                 >
-                  {item.text}
-                </Button>
+                  {code === 'en' ? 'EN' : 'हिं'}
+                </Box>
               ))}
             </Box>
-          )}
+
+            {isMobile ? (
+              <IconButton
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{
+                  color: theme.palette.primary.dark,
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            ) : (
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                {menuItems.map((item) => (
+                  <Button
+                    key={item.text}
+                    onClick={() => scrollToSection(item.href)}
+                    sx={{
+                      color: theme.palette.primary.dark,
+                      fontWeight: 600,
+                      textTransform: 'none',
+                      fontSize: '1rem',
+                      borderRadius: 100,
+                      px: 2,
+                      '&:hover': {
+                        backgroundColor: theme.palette.primary.main,
+                        color: '#ffffff',
+                        boxShadow: 'none',
+                      },
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    {item.text}
+                  </Button>
+                ))}
+              </Box>
+            )}
+          </Box>
         </Toolbar>
       </Container>
 

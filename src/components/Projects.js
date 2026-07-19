@@ -17,9 +17,11 @@ import {
   Visibility,
 } from '@mui/icons-material';
 import { projects } from '../data/projects';
+import { useLanguage } from '../context/LanguageContext';
 
 const Projects = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const ProjectCard = ({ project }) => (
     <Card
@@ -28,36 +30,32 @@ const Projects = () => {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 1,
-        border: '1px solid',
-        borderColor: 'grey.200',
-        boxShadow: 'none',
         cursor: 'pointer',
         transition: 'border-color 0.2s ease',
         '&:hover': {
-          borderColor: 'secondary.main',
+          borderColor: 'primary.main',
         },
       }}
     >
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: 'relative', p: 1.5, pb: 0 }}>
         <CardMedia
           component="img"
-          height="200"
+          height="180"
           image={project.image}
           alt={project.title}
-          sx={{ objectFit: 'cover' }}
+          sx={{ objectFit: 'cover', borderRadius: 3 }}
         />
         <Chip
           label={project.status}
           size="small"
           sx={{
             position: 'absolute',
-            top: 12,
-            left: 12,
-            backgroundColor: 'secondary.main',
-            color: '#1A1200',
+            top: 24,
+            left: 24,
+            backgroundColor: 'rgba(255,255,255,0.94)',
+            color: 'primary.dark',
             fontWeight: 700,
-            borderRadius: 0.5,
+            borderRadius: 100,
           }}
         />
       </Box>
@@ -73,7 +71,7 @@ const Projects = () => {
           </Typography>
         </Box>
 
-        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: 'secondary.dark' }}>
+        <Typography sx={{ fontFamily: 'Charter, Georgia, serif', fontWeight: 700, fontSize: '1.15rem', mb: 1, color: 'secondary.dark' }}>
           {project.price}
         </Typography>
 
@@ -88,7 +86,7 @@ const Projects = () => {
               label={feature}
               size="small"
               variant="outlined"
-              sx={{ fontSize: '0.7rem', borderRadius: 0.5, borderColor: 'grey.300' }}
+              sx={{ fontSize: '0.7rem', borderRadius: 100, borderColor: 'grey.300' }}
             />
           ))}
         </Box>
@@ -99,18 +97,18 @@ const Projects = () => {
             size="small"
             startIcon={<Map />}
             onClick={(e) => { e.stopPropagation(); window.open(project.mapLink, '_blank'); }}
-            sx={{ flex: 1, borderRadius: 0.5, borderColor: 'primary.main', color: 'primary.main' }}
+            sx={{ flex: 1, borderColor: 'primary.main', color: 'primary.main' }}
           >
-            View Map
+            {t('view_map')}
           </Button>
           <Button
             variant="contained"
             size="small"
             startIcon={<Visibility />}
             onClick={(e) => { e.stopPropagation(); navigate(`/project/${project.id}`); }}
-            sx={{ flex: 1, borderRadius: 0.5, backgroundColor: 'primary.main', boxShadow: 'none' }}
+            sx={{ flex: 1, backgroundColor: 'primary.main', boxShadow: 'none' }}
           >
-            Details
+            {t('details')}
           </Button>
         </Box>
       </CardContent>
@@ -125,14 +123,15 @@ const Projects = () => {
             variant="h3"
             component="h1"
             sx={{
-              fontWeight: 800,
+              fontFamily: 'Optima, Candara, "Century Gothic", sans-serif',
+              fontWeight: 700,
               color: 'primary.main',
             }}
           >
-            Our Portfolio
+            {t('portfolio_title')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
-            {projects.length} projects across Mathura–Vrindavan
+            {t('portfolio_count', projects.length)}
           </Typography>
         </Box>
 
@@ -145,7 +144,7 @@ const Projects = () => {
             fontWeight: 400,
           }}
         >
-          Residential plots, villas, flats and commercial properties — ongoing, upcoming, and completed.
+          {t('portfolio_subtitle')}
         </Typography>
 
         <Grid container spacing={3}>
