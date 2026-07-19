@@ -88,27 +88,27 @@ const Hero = () => {
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
+          alignItems: 'stretch',
           mt: { xs: '56px', md: '64px' },
           minHeight: { xs: 'auto', md: 520 },
         }}
       >
-        {/* Text column — 25% on desktop, appears below the banner on mobile */}
+        {/* Text — plain page background, no overlay on the banner */}
         <Box
           sx={{
-            order: { xs: 2, md: 0 },
-            width: { xs: '100%', md: '25%' },
+            order: { xs: 2, md: 1 },
+            width: { xs: '100%', md: 340, lg: 400 },
             flexShrink: 0,
-            backgroundColor: 'primary.dark',
-            color: '#fff',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            gap: 2.5,
-            p: { xs: 3, md: 3 },
+            gap: 2.25,
+            pl: { xs: 3, sm: 4, md: 5, lg: 7 },
+            pr: { xs: 3, sm: 4, md: 4 },
             py: { xs: 5, md: 4 },
           }}
         >
-          <Typography variant="overline" sx={{ color: 'secondary.light', fontWeight: 700, letterSpacing: '0.15em', display: 'block' }}>
+          <Typography variant="overline" sx={{ color: 'secondary.dark', fontWeight: 700, letterSpacing: '0.15em', display: 'block' }}>
             {t('hero_eyebrow')}
           </Typography>
 
@@ -116,20 +116,20 @@ const Hero = () => {
             variant="h1"
             sx={{
               fontFamily: 'Optima, Candara, "Century Gothic", sans-serif',
-              color: '#ffffff',
+              color: 'primary.dark',
               fontWeight: 700,
-              fontSize: { xs: '2rem', sm: '2.2rem', md: '1.6rem', lg: '1.8rem', xl: '2rem' },
+              fontSize: { xs: '2rem', sm: '2.2rem', md: '1.9rem', lg: '2.2rem' },
               lineHeight: 1.2,
             }}
           >
             {t('hero_title_1')}{' '}
-            <Box component="span" sx={{ color: 'secondary.light' }}>
+            <Box component="span" sx={{ color: 'secondary.main' }}>
               {t('hero_title_accent')}
             </Box>{' '}
             {t('hero_title_2')}
           </Typography>
 
-          <Typography sx={{ fontFamily: 'Charter, Georgia, serif', color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem', lineHeight: 1.65 }}>
+          <Typography sx={{ fontFamily: 'Charter, Georgia, serif', color: 'text.secondary', fontSize: '0.95rem', lineHeight: 1.65 }}>
             {t('hero_subtitle')}
           </Typography>
 
@@ -148,7 +148,7 @@ const Hero = () => {
               href="tel:+919084203961"
               onClick={() => logEvent('contact', { method: 'call', location: 'hero' })}
               startIcon={<Phone fontSize="small" />}
-              sx={{ borderColor: 'rgba(255,255,255,0.5)', color: '#fff', py: 1.25, '&:hover': { borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' } }}
+              sx={{ borderColor: 'primary.main', borderWidth: 1.5, color: 'primary.dark', py: 1.25, '&:hover': { borderColor: 'primary.main', backgroundColor: 'rgba(15,23,42,0.05)' } }}
             >
               {t('hero_call_now')}
             </Button>
@@ -160,19 +160,19 @@ const Hero = () => {
               rel="noopener noreferrer"
               onClick={() => logEvent('contact', { method: 'whatsapp', location: 'hero' })}
               startIcon={<WhatsApp fontSize="small" />}
-              sx={{ borderColor: 'rgba(255,255,255,0.5)', color: '#fff', py: 1.25, '&:hover': { borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.1)' } }}
+              sx={{ borderColor: 'primary.main', borderWidth: 1.5, color: 'primary.dark', py: 1.25, '&:hover': { borderColor: 'primary.main', backgroundColor: 'rgba(15,23,42,0.05)' } }}
             >
               {t('hero_whatsapp')}
             </Button>
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 2.5, flexWrap: 'wrap', pt: 1.5, borderTop: '1px solid rgba(255,255,255,0.15)' }}>
+          <Box sx={{ display: 'flex', gap: 2.5, flexWrap: 'wrap', pt: 1.5, borderTop: '1px solid #E5E7EB' }}>
             {stats.map((stat) => (
               <Box key={stat.label}>
-                <Typography sx={{ fontFamily: 'Optima, Candara, sans-serif', fontWeight: 700, fontSize: '1.15rem', color: '#fff' }}>
+                <Typography sx={{ fontFamily: 'Optima, Candara, sans-serif', fontWeight: 700, fontSize: '1.15rem', color: 'primary.dark' }}>
                   {stat.value}
                 </Typography>
-                <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.03em', fontSize: '0.62rem', display: 'block' }}>
+                <Typography variant="caption" sx={{ color: 'text.secondary', textTransform: 'uppercase', letterSpacing: '0.03em', fontSize: '0.62rem', display: 'block' }}>
                   {stat.label}
                 </Typography>
               </Box>
@@ -180,14 +180,15 @@ const Hero = () => {
           </Box>
         </Box>
 
-        {/* Banner column — 75% on desktop, appears on top on mobile */}
+        {/* Banner — fills all remaining space to the right edge of the screen */}
         <Box
           sx={{
-            order: { xs: 1, md: 0 },
-            width: { xs: '100%', md: '75%' },
+            order: { xs: 1, md: 2 },
+            flex: { xs: 'none', md: 1 },
             position: 'relative',
             overflow: 'hidden',
             height: { xs: 300, sm: 380, md: 'auto' },
+            backgroundColor: '#0F172A',
           }}
         >
           {SLIDES.map((s, i) => (
@@ -201,19 +202,12 @@ const Hero = () => {
                 inset: 0,
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                objectFit: 'contain',
                 opacity: i === slide ? 1 : 0,
                 transition: 'opacity 1s ease',
               }}
             />
           ))}
-          <Box
-            sx={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.4) 100%)',
-            }}
-          />
 
           <Box onClick={() => setSlide((slide - 1 + SLIDES.length) % SLIDES.length)} sx={{ ...arrowSx, left: 16 }}>
             <ArrowBackIos fontSize="small" sx={{ ml: 0.5 }} />
@@ -241,12 +235,12 @@ const Hero = () => {
         </Box>
       </Box>
 
-      {/* Search bar, overlapping the hero/content boundary */}
+      {/* Search bar — sits cleanly below, no overlap with the banner */}
       <Container maxWidth="lg" sx={{ position: 'relative' }}>
         <Paper
           elevation={0}
           sx={{
-            mt: { xs: -4, md: -5 },
+            mt: { xs: 3, md: 4 },
             mb: { xs: 4, md: 6 },
             p: { xs: 2, md: 2.5 },
             borderRadius: 2,
@@ -254,8 +248,6 @@ const Hero = () => {
             display: 'flex',
             gap: 2,
             flexWrap: 'wrap',
-            position: 'relative',
-            zIndex: 4,
             flexDirection: 'column',
             alignItems: 'stretch',
           }}
