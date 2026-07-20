@@ -90,7 +90,6 @@ const Hero = () => {
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: 'stretch',
           mt: { xs: '56px', md: '64px' },
-          minHeight: { xs: 'auto', md: 520 },
         }}
       >
         {/* Text — plain page background, no overlay on the banner */}
@@ -180,15 +179,17 @@ const Hero = () => {
           </Box>
         </Box>
 
-        {/* Banner — fills all remaining space to the right edge of the screen */}
+        {/* Banner — fills all remaining space to the right edge of the screen.
+            Height comes from aspect-ratio (not a fixed px value) so the box
+            always matches the image's real proportions: no crop, no letterbox. */}
         <Box
           sx={{
             order: { xs: 1, md: 2 },
             flex: { xs: 'none', md: 1 },
             position: 'relative',
             overflow: 'hidden',
-            height: { xs: 300, sm: 380, md: 'auto' },
-            backgroundColor: '#0F172A',
+            aspectRatio: { xs: '16 / 9', md: 'auto' },
+            alignSelf: { md: 'stretch' },
           }}
         >
           {SLIDES.map((s, i) => (
@@ -202,7 +203,7 @@ const Hero = () => {
                 inset: 0,
                 width: '100%',
                 height: '100%',
-                objectFit: 'contain',
+                objectFit: 'cover',
                 opacity: i === slide ? 1 : 0,
                 transition: 'opacity 1s ease',
               }}
